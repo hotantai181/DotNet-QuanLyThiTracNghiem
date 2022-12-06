@@ -22,10 +22,6 @@ namespace BLL
         {
             return new MonHocDAL().getTenMH(pMaPT);
         }
-        public static List<MonHoc> GetMonHocs_LichThi(string pNgayThi)
-        {
-            return new MonHocDAL().GetMonHocs_LichThi(pNgayThi);
-        }
         public static List<Khoa> GetKhoa(string pMaMonHoc)
         {
             return new MonHocDAL().GetKhoa(pMaMonHoc);

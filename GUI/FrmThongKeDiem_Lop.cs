@@ -82,12 +82,13 @@ namespace GUI
 
             if (_ckErr) return;
 
-            lstKq = new ThongKeDiemBLL().getThongTinDiems_lop(
-                cboMon.SelectedValue.ToString(),
-                cboLop.SelectedValue.ToString(),
-                cboNiemKhoa.Text,
-                cboHocKy.Text);
-            dataGridViewTT.DataSource = lstKq;
+        //    lstKq = new ThongKeDiemBLL().getThongTinDiems_lop(
+        //        cboMon.SelectedValue.ToString(),
+        //        cboLop.SelectedValue.ToString(),
+        //        cboNiemKhoa.Text,
+        //        cboHocKy.Text);
+        //    dataGridViewTT.DataSource = lstKq;
+        //}
         }
         private void dataGridViewTT_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
@@ -98,7 +99,7 @@ namespace GUI
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            new ThongKeDiemBLL().exportExcel_Lop(cboMon.Text, cboLop.SelectedValue.ToString(), cboHocKy.Text, cboNiemKhoa.Text, lstKq);
+            //new ThongKeDiemBLL().exportExcel_Lop(cboMon.Text, cboLop.SelectedValue.ToString(), cboHocKy.Text, cboNiemKhoa.Text, lstKq);
         }
 
         private void dataGridViewTT_DataSourceChanged(object sender, EventArgs e)

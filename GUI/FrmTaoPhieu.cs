@@ -152,16 +152,16 @@ namespace GUI
         {
             // sửa thông tin số câu ở mỗi chương
         
-            frmThemSoCauHoiChuong frm = new frmThemSoCauHoiChuong();
-            frm.lstChuong = bus_phieuTao.getDs_cauHoi_conLai(cboMonHoc.SelectedValue.ToString(), string.Empty);
-            frm.maPhieuTaoDe = txtMaPhieu.Text;
-            frm.maChuong = drvSoLuongCauHoi.CurrentRow.Cells["MaChuong"].Value.ToString();
-            frm.maPt_c = drvSoLuongCauHoi.CurrentRow.Cells["Ma"].Value.ToString(); // mã phiếu tạo chương
-            frm.soCauHoi = int.Parse(drvSoLuongCauHoi.CurrentRow.Cells["SoLuong"].Value.ToString());
-            frm.tongCauHoiConLai = tongSoCauConLai;
-            frm.ShowDialog();
+            //frmThemSoCauHoiChuong frm = new frmThemSoCauHoiChuong();
+            //frm.lstChuong = bus_phieuTao.getDs_cauHoi_conLai(cboMonHoc.SelectedValue.ToString(), string.Empty);
+            //frm.maPhieuTaoDe = txtMaPhieu.Text;
+            //frm.maChuong = drvSoLuongCauHoi.CurrentRow.Cells["MaChuong"].Value.ToString();
+            //frm.maPt_c = drvSoLuongCauHoi.CurrentRow.Cells["Ma"].Value.ToString(); // mã phiếu tạo chương
+            //frm.soCauHoi = int.Parse(drvSoLuongCauHoi.CurrentRow.Cells["SoLuong"].Value.ToString());
+            //frm.tongCauHoiConLai = tongSoCauConLai;
+            //frm.ShowDialog();
 
-            reLoad();
+            //reLoad();
            
         }
 
@@ -285,34 +285,34 @@ namespace GUI
 
         private void thêmSốCâuHỏiChươngToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (cboMonHoc.Text == string.Empty)
-            {
-                MessageBox.Show("Vui lòng chọn môn học", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            //if (cboMonHoc.Text == string.Empty)
+            //{
+            //    MessageBox.Show("Vui lòng chọn môn học", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
 
-                return;
-            }
+            //    return;
+            //}
 
-            frmThemSoCauHoiChuong frm = new frmThemSoCauHoiChuong();
-            frm.lstChuong = bus_phieuTao.getDs_cauHoi_conLai(cboMonHoc.SelectedValue.ToString(), txtMaPhieu.Text);
-            frm.maPhieuTaoDe = txtMaPhieu.Text;
-            frm.tongCauHoiConLai = tongSoCauConLai;
-            frm.ShowDialog();
+            //frmThemSoCauHoiChuong frm = new frmThemSoCauHoiChuong();
+            //frm.lstChuong = bus_phieuTao.getDs_cauHoi_conLai(cboMonHoc.SelectedValue.ToString(), txtMaPhieu.Text);
+            //frm.maPhieuTaoDe = txtMaPhieu.Text;
+            //frm.tongCauHoiConLai = tongSoCauConLai;
+            //frm.ShowDialog();
 
-            reLoad();
+            //reLoad();
         }
 
         private void xóaSốCâuHỏiChươngToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Bạn có muốn xóa không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.No)
-                return;
+            //if (MessageBox.Show("Bạn có muốn xóa không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.No)
+            //    return;
 
-            if (bus_phieuTao.remove_phieuTaoDe_chuong(int.Parse(drvSoLuongCauHoi.CurrentRow.Cells["Ma"].Value.ToString())))
-            {
-                MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            //if (bus_phieuTao.remove_phieuTaoDe_chuong(int.Parse(drvSoLuongCauHoi.CurrentRow.Cells["Ma"].Value.ToString())))
+            //{
+            //    MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
 
-                reLoad();
+            //    reLoad();
 
-            }
+            //}
         }
     }
 }

@@ -24,7 +24,7 @@ namespace GUI
         private void txtMssv_TextChanged(object sender, EventArgs e)
         {
             masv = txtMssv.Text;
-            dgvDSSV.DataSource = SinhVienBLL.SearchSinhViens(masv, 60);
+            dgvDSSV.DataSource = HocSinhBLL.SearchSinhViens(masv, 60);
         }
 
 
@@ -85,13 +85,13 @@ namespace GUI
 
                     System.Data.DataTable db = exDataSet.Tables[0];
                     dgvDSSV.DataSource = db;
-                    List<SinhVien> sinhvien = new List<SinhVien>();
+                    List<HocSinh> sinhvien = new List<HocSinh>();
 
                     foreach (DataRow r in db.Rows)
                     {
                         try
                         {
-                            sinhvien.Add(new SinhVien
+                            sinhvien.Add(new HocSinh
                             {
                                 Mssv = r[0].ToString(),
                                 HoTen = r[1].ToString(),
@@ -107,7 +107,7 @@ namespace GUI
                     }
                     if (MessageBox.Show("Sinh viên đã được tải lên! Bạn có muốn lưu vào cơ sở dữ liệu không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        if (SinhVienBLL.InsertAll(sinhvien))
+                        if (HocSinhBLL.InsertAll(sinhvien))
                         {
                             MessageBox.Show("Lưu thành công!");
                         }
@@ -157,7 +157,7 @@ namespace GUI
         private void cbbLop_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             string malop = cbbLop.SelectedValue.ToString();
-            dgvDSSV.DataSource = SinhVienBLL.SearchSinhViensByLop(malop, 40);
+            dgvDSSV.DataSource = HocSinhBLL.SearchSinhViensByLop(malop, 40);
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -194,12 +194,12 @@ namespace GUI
         {
             if (MessageBox.Show("Lưu lại?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                List<SinhVien> sinhViens = new List<SinhVien>();
+                List<HocSinh> sinhViens = new List<HocSinh>();
                 foreach (DataGridViewRow r in dgvDSSV.Rows)
                 {
                     try
                     {
-                        sinhViens.Add(new SinhVien
+                        sinhViens.Add(new HocSinh
                         {
                             HoTen = r.Cells[0].Value.ToString(),
                             MaLop = r.Cells[1].Value.ToString(),

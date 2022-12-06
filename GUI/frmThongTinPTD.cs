@@ -58,15 +58,15 @@ namespace GUI
 
         private void drvSoLuongCauHoi_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // sửa thông tin số câu ở mỗi chương
-            frmThongTinMucDoCau frm = new frmThongTinMucDoCau();
-            frm.lstChuong = bus_phieuTao.getDs_cauHoi_conLai(maMH, string.Empty);
-            frm.maPhieuTaoDe = txtMaPhieu.Text;
-            frm.maChuong = drvSoLuongCauHoi.CurrentRow.Cells["MaChuong"].Value.ToString();
-            frm.maPt_c = drvSoLuongCauHoi.CurrentRow.Cells["Ma"].Value.ToString(); // mã phiếu tạo chương
-            frm.soCauHoi = int.Parse(drvSoLuongCauHoi.CurrentRow.Cells["SoLuong"].Value.ToString());
+            //// sửa thông tin số câu ở mỗi chương
+            //frmThongTinMucDoCau frm = new frmThongTinMucDoCau();
+            //frm.lstChuong = bus_phieuTao.getDs_cauHoi_conLai(maMH, string.Empty);
+            //frm.maPhieuTaoDe = txtMaPhieu.Text;
+            //frm.maChuong = drvSoLuongCauHoi.CurrentRow.Cells["MaChuong"].Value.ToString();
+            //frm.maPt_c = drvSoLuongCauHoi.CurrentRow.Cells["Ma"].Value.ToString(); // mã phiếu tạo chương
+            //frm.soCauHoi = int.Parse(drvSoLuongCauHoi.CurrentRow.Cells["SoLuong"].Value.ToString());
 
-            frm.ShowDialog();
+            //frm.ShowDialog();
         }
 
         private void drvSoLuongCauHoi_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)

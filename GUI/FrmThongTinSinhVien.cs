@@ -7,11 +7,11 @@ namespace GUI
 {
     public partial class FrmThongTinSinhVien : Form
     {
-        private SinhVien sinhVien;
+        private HocSinh sinhVien;
 
-        public SinhVien SinhVien { get => sinhVien; set => sinhVien = value; }
+        public HocSinh SinhVien { get => sinhVien; set => sinhVien = value; }
 
-        public FrmThongTinSinhVien(SinhVien sinhVien)
+        public FrmThongTinSinhVien(HocSinh sinhVien)
         {
             InitializeComponent();
             SinhVien = sinhVien;

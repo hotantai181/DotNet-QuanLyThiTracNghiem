@@ -10,11 +10,11 @@ namespace BLL
 {
     public class BaiThiBLL
     {
-        public static void InsertBaiThi(List<BaiThi> baiThis)
+        public static void InsertBaiThi(List<ChiTietBaiThi> baiThis)
         {
             new BaiThiDAL().InsertBaiThi(baiThis);
         }
-        public static List<BaiThi> GetListBaiThi(int maSvLT)
+        public static List<ChiTietBaiThi> GetListBaiThi(int maSvLT)
         {
             return new BaiThiDAL().GetListBaiThi(maSvLT);
         }

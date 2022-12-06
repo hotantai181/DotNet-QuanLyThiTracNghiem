@@ -47,7 +47,7 @@
             this.mnDangXuat});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(982, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1193, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -61,19 +61,20 @@
             // mnXemLichThi
             // 
             this.mnXemLichThi.Name = "mnXemLichThi";
-            this.mnXemLichThi.Size = new System.Drawing.Size(116, 26);
-            this.mnXemLichThi.Text = "Xem lịch thi";
+            this.mnXemLichThi.Size = new System.Drawing.Size(154, 26);
+            this.mnXemLichThi.Text = "Ôn luyện thi thử";
             this.mnXemLichThi.Click += new System.EventHandler(this.mnXemLichThi_Click);
             // 
             // mnThi
             // 
             this.mnThi.Name = "mnThi";
-            this.mnThi.Size = new System.Drawing.Size(49, 26);
-            this.mnThi.Text = "Thi";
+            this.mnThi.Size = new System.Drawing.Size(164, 26);
+            this.mnThi.Text = "Kiểm tra năng lực";
             this.mnThi.Click += new System.EventHandler(this.mnThi_Click);
             // 
             // mnDangXuat
             // 
+            this.mnDangXuat.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.mnDangXuat.Name = "mnDangXuat";
             this.mnDangXuat.Size = new System.Drawing.Size(106, 26);
             this.mnDangXuat.Text = "Đăng xuất";
@@ -83,14 +84,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(982, 510);
+            this.ClientSize = new System.Drawing.Size(1193, 694);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Tahoma", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.IsMdiContainer = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmMainSinhVien";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmMainSinhVien";
+            this.Text = "Ứng dụng ôn thi THPTQG";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMainSinhVien_FormClosing);
             this.Load += new System.EventHandler(this.FrmMainSinhVien_Load);
             this.menuStrip1.ResumeLayout(false);

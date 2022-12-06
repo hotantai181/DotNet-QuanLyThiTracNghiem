@@ -33,17 +33,17 @@ namespace GUI
 
         private void btnTaoDe_Click(object sender, EventArgs e)
         {
-            string maPT = drvDSPhieu.CurrentRow.Cells["MaPhieu"].Value.ToString();
-            // tạo đề thi
-            bus_phieuTao.taoDeThi(maPT);
+            //string maPT = drvDSPhieu.CurrentRow.Cells["MaPhieu"].Value.ToString();
+            //// tạo đề thi
+            //bus_phieuTao.taoDeThi(maPT);
 
-            // tạo chi tiết cho từng đề thi
-            bus_phieuTao.taoCTDeThi(maPT);
+            //// tạo chi tiết cho từng đề thi
+            //bus_phieuTao.taoCTDeThi(maPT);
 
-            // cập nhật trạng thái
-            bus_phieuTao.capNhatTrangThai(maPT, "Đã xác nhận");
+            //// cập nhật trạng thái
+            //bus_phieuTao.capNhatTrangThai(maPT, "Đã xác nhận");
 
-            this.OnLoad(e);
+            //this.OnLoad(e);
         }
 
         private void frmTaoDeThi_Load(object sender, EventArgs e)
@@ -64,24 +64,24 @@ namespace GUI
 
         private void drvDSPhieu_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            isValid = false;
+            //isValid = false;
 
-            string _trangThai = drvDSPhieu.CurrentRow.Cells["TrangThai"].Value.ToString();
+            //string _trangThai = drvDSPhieu.CurrentRow.Cells["TrangThai"].Value.ToString();
 
-            if (_trangThai != string.Empty) return;
+            //if (_trangThai != string.Empty) return;
 
-            try
-            {
-                bus_phieuTao.kiemTraPhieuTao(drvDSPhieu.CurrentRow.Cells["MaPhieu"].Value.ToString());
+            //try
+            //{
+            //    bus_phieuTao.kiemTraPhieuTao(drvDSPhieu.CurrentRow.Cells["MaPhieu"].Value.ToString());
 
-                btnTaoDe.Enabled = _trangThai == string.Empty;
-            }
-            catch (Exception er)
-            {
-                MessageBox.Show(er.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            //    btnTaoDe.Enabled = _trangThai == string.Empty;
+            //}
+            //catch (Exception er)
+            //{
+            //    MessageBox.Show(er.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
 
-                isValid = true;
-            }
+            //    isValid = true;
+            //}
         }
 
         private void drvDSPhieu_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

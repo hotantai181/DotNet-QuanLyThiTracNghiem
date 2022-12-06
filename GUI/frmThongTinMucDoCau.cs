@@ -14,7 +14,7 @@ namespace GUI
 {
     public partial class frmThongTinMucDoCau : Form
     {
-        public List<Chuong> lstChuong;
+    
         public string maPhieuTaoDe;
         public string kq;
         private PhieuTaoBLL bus_pt = new PhieuTaoBLL();
@@ -34,20 +34,14 @@ namespace GUI
 
         private void frmThongTinMucDoCau_Load(object sender, EventArgs e)
         {
-            cboChuong.DataSource = lstChuong;
-            cboChuong.ValueMember = "MaChuong";
-            cboChuong.DisplayMember = "TenChuong";
+           
 
             cboChuong.Enabled = false;
             cboChuong.SelectedValue = int.Parse(maChuong);
 
             txtSoLuongCauHoi.Text = soCauHoi.ToString();
 
-            new PhieuTaoBLL().getMaMucDo(int.Parse(maPt_c)).ForEach(item =>
-            {
-                drvMucDo.Rows.Add(1, item.MucDo1, item.SoCau);
-            });
-
+          
             drvMucDo.ClearSelection();
         }
 

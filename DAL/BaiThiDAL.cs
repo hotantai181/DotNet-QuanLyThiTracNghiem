@@ -10,19 +10,19 @@ namespace DAL
     public class BaiThiDAL
     {
 
-        public void InsertBaiThi(List<BaiThi> baiThis)
+        public void InsertBaiThi(List<ChiTietBaiThi> baiThis)
         {
             using (var db = new QLThiTracNghiemDataContext())
             {
-                db.BaiThis.InsertAllOnSubmit(baiThis);
+                db.ChiTietBaiThis.InsertAllOnSubmit(baiThis);
                 db.SubmitChanges();
             }
         }
 
-        public List<BaiThi> GetListBaiThi(int maSvLT)
+        public List<ChiTietBaiThi> GetListBaiThi(int maSvLT)
         {
             QLThiTracNghiemDataContext db = new QLThiTracNghiemDataContext();
-            return db.BaiThis.Where(t => (int)t.MaSVLT == maSvLT).ToList();
+            return db.ChiTietBaiThis.Where(t => (int)t.MaBaiThi == maSvLT).ToList();
         }
     }
 }

@@ -40,7 +40,7 @@ namespace GUI
             result = MessageBox.Show(message + "'" + txtMssv.Text.Trim() + "'", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
             if (result == DialogResult.Yes)
             {
-                SinhVienBLL.GetSinhVien(masv);
+                HocSinhBLL.GetSinhVien(masv);
                 MessageBox.Show("Mật khẩu mới là '" + txtMssv.Text.Trim() + "'", "Thông báo");
             }
         }
@@ -57,7 +57,7 @@ namespace GUI
         private void txtMssv_TextChanged_1(object sender, EventArgs e)
         {
             masv = txtMssv.Text;
-            dgvDSSV.DataSource = SinhVienBLL.SearchSinhViens(masv, 6);
+            dgvDSSV.DataSource = HocSinhBLL.SearchSinhViens(masv, 6);
         }
     }
 }

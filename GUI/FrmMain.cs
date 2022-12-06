@@ -108,12 +108,12 @@ namespace GUI
 
         private void mnQLPhucKhao_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FrmPhucKhao());
+            
         }
 
         private void mnThongKeDiemTheoPhong_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FrmThongKeDiem_PhongThi());
+           
         }
 
         private void quảnLýChungToolStripMenuItem_Click(object sender, EventArgs e)

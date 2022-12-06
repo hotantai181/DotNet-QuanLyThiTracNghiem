@@ -13,7 +13,7 @@ namespace BLL
 {
     public class MyReports
     {
-        public void exportDocument(string mDe, string mHoc, List<BaiThi> baiThis)
+        public void exportDocument(string mDe, string mHoc, List<ChiTietBaiThi> baiThis)
         {
             WordDocument document = new WordDocument();
             //Adding a new section to the document.

@@ -28,12 +28,6 @@ namespace DAL
             return db.MonHocs.Where(mh => mh.MaMonHoc.Equals(maMH)).Select(mh => mh.TenMonHoc).Single();
         }
 
-        public List<MonHoc> GetMonHocs_LichThi(string pNgayThi)
-        {
-            return db.LichThis.Where(lt => lt.NgayThi == DateTime.ParseExact(pNgayThi, "dd/MM/yyyy", CultureInfo.InvariantCulture))
-                .Select(lt => lt.MonHoc).ToList();
-        }
-
         public List<Khoa> GetKhoa(string pMaMonHoc)
         {
             return db.Khoas

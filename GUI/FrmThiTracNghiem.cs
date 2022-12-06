@@ -12,34 +12,34 @@ namespace GUI
     public partial class FrmThiTracNghiem : Form
     {
         private int maCauHoi = 0;
-        private SinhVien sinhVien;
+        private HocSinh sinhVien;
         private int counter = 60;
         private Timer aTimer;
-        private SinhVien_LichThi sv_lt;
+       
         private int maSV_LT;
 
-        private List<BaiThi> ltBaiThi;
+        private List<ChiTietBaiThi> ltBaiThi;
 
         public int MaSV_LT { get => maSV_LT; set => maSV_LT = value; }
-        public SinhVien_LichThi Sv_lt { get => sv_lt; set => sv_lt = value; }
+       
 
-        public FrmThiTracNghiem(string massv, SinhVien_LichThi Sv_lt)
+        public FrmThiTracNghiem(string massv, HocSinh Sv_lt)
         {
             InitializeComponent();
-            this.Sv_lt = Sv_lt;
-            ltBaiThi = new List<BaiThi>();
-            sinhVien = SinhVienBLL.GetSinhVien(massv);
+            //this.maSV_LT = Sv_lt();
+            ltBaiThi = new List<ChiTietBaiThi>();
+            sinhVien = HocSinhBLL.GetSinhVien(massv);
             
         }
 
         private void FrmThiTracNghiem_Load(object sender, EventArgs e)
         {
-            lbCauHoi.MaximumSize = new Size(pnDe.Width, 0);
-            MaSV_LT = this.Sv_lt.MaSVLT;
-            lbMonHoc.Text = "Môn học: "+ Sv_lt.LichThi.MonHoc.TenMonHoc;
-            counter = counter * (int)Sv_lt.DeThi.PhieuTaoDe.ThoiGianLamBai;
+            //lbCauHoi.MaximumSize = new Size(pnDe.Width, 0);
+            //MaSV_LT = this.Sv_lt.MaSVLT;
+            //lbMonHoc.Text = "Môn học: " + Sv_lt.LichThi.MonHoc.TenMonHoc;
+            //counter = counter * (int)Sv_lt.DeThi.PhieuTaoDe.ThoiGianLamBai;
             LoadInfoSinhVien();
-            LoadCauHoi();
+            //LoadCauHoi();
             runTime();
         }
 
@@ -79,22 +79,22 @@ namespace GUI
                 MessageBox.Show("Còn 5 phút nữa bài thi sẽ tự động lưu và thoát khỏi form làm bài");
             }
 
-            if (hour == 0 && minute == 0 && second == 0)
-            {
-                KiemTraBaiLam();
-                try
-                {
-                    BaiThiBLL.InsertBaiThi(ltBaiThi);
-                    SinhVien_LichThiBLL.UpdateTrangThai(maSV_LT, true);
-                    MessageBox.Show("Hết giờ làm bìa. Nộp bài thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    TinhDiem();
-                    this.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Hết giờ làm bìa. Nộp bài không thành công. Vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            //if (hour == 0 && minute == 0 && second == 0)
+            //{
+            //    KiemTraBaiLam();
+            //    try
+            //    {
+            //        BaiThiBLL.InsertBaiThi(ltBaiThi);
+            //        ChiTietBaiThi.UpdateTrangThai(maSV_LT, true);
+            //        MessageBox.Show("Hết giờ làm bìa. Nộp bài thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        TinhDiem();
+            //        this.Close();
+            //    }
+            //    catch
+            //    {
+            //        MessageBox.Show("Hết giờ làm bìa. Nộp bài không thành công. Vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    }
+            //}
         }
         private void pnDe_SizeChanged(object sender, EventArgs e)
         {
@@ -134,37 +134,37 @@ namespace GUI
                 SelectAnswer(rdo.Text.ToString());
         }
 
-        private void LoadCauHoi()
-        {
-            var ltCauHoi = NganHangCauHoiBLL.GetListCauHoi(Sv_lt.MaDe);
+        //private void LoadCauHoi()
+        //{
+        //    var ltCauHoi = NganHangCauHoiBLL.GetListCauHoi(Sv_lt.MaDe);
 
-            int i = ltCauHoi.Count();
-            foreach (var item in ltCauHoi)
-            {
-                UCCauHoiThi uc = new UCCauHoiThi(item, i);
+        //    int i = ltCauHoi.Count();
+        //    foreach (var item in ltCauHoi)
+        //    {
+        //        UCCauHoiThi uc = new UCCauHoiThi(item, i);
 
-                uc.Dock = DockStyle.Top;
+        //        uc.Dock = DockStyle.Top;
 
-                if (i == 1)
-                {
-                    LoadDataItem(item, uc.Index);
-                    uc.BackColor = Color.Yellow;
-                }
+        //        if (i == 1)
+        //        {
+        //            LoadDataItem(item, uc.Index);
+        //            uc.BackColor = Color.Yellow;
+        //        }
 
-                uc.lbCau.Click += (o, e) =>
-                {
-                    ResetRadioButton();
-                    SelectCauHoiUI();
-                    SelectAnswer(uc.SelectedAnswer());
-                    LoadDataItem(item, uc.Index);
-                    uc.BackColor = Color.Yellow;
+        //        uc.lbCau.Click += (o, e) =>
+        //        {
+        //            ResetRadioButton();
+        //            SelectCauHoiUI();
+        //            SelectAnswer(uc.SelectedAnswer());
+        //            LoadDataItem(item, uc.Index);
+        //            uc.BackColor = Color.Yellow;
 
-                };
+        //        };
 
-                pnCauHoi.Controls.Add(uc);
-                i--;
-            }
-        }
+        //        pnCauHoi.Controls.Add(uc);
+        //        i--;
+        //    }
+        //}
 
         private void LoadDataItem(NganHangCauHoi item, int index)
         {
@@ -306,9 +306,9 @@ namespace GUI
                         trangThai = "Đúng";
                     }
 
-                    BaiThi bai = new BaiThi
+                    ChiTietBaiThi bai = new ChiTietBaiThi
                     {
-                        MaSVLT = maSV_LT,
+                        MaBaiThi = maSV_LT,
                         CauHoi = uc.Cauhoi.MaCauHoi,
                         CauTraLoi = uc.SelectedAnswer(),
                         TrangThai = trangThai,
@@ -317,68 +317,68 @@ namespace GUI
                 }
             }
         }
-        private void TinhDiem()
-        {
-            int soCauDung = 0; 
-            int soChuaLam = 0;
-            int soCauSai = 0;
+        //private void TinhDiem()
+        //{
+        //    int soCauDung = 0; 
+        //    int soChuaLam = 0;
+        //    int soCauSai = 0;
 
-            foreach (BaiThi baiThi in ltBaiThi)
-            {
-                if(baiThi.TrangThai.Equals("Đúng")) soCauDung ++;   
-                else if (baiThi.TrangThai.Equals("Chưa làm")) soChuaLam++;
-                else if (baiThi.TrangThai.Equals("Sai")) soCauSai++;
-            }
-            float diemMoiCau = 10f / ltBaiThi.Count;
-            float diem = diemMoiCau * (float)soCauDung;
+        //    foreach (ChiTietBaiThi baiThi in ltBaiThi)
+        //    {
+        //        if(baiThi.TrangThai.Equals("Đúng")) soCauDung ++;   
+        //        else if (baiThi.TrangThai.Equals("Chưa làm")) soChuaLam++;
+        //        else if (baiThi.TrangThai.Equals("Sai")) soCauSai++;
+        //    }
+        //    float diemMoiCau = 10f / ltBaiThi.Count;
+        //    float diem = diemMoiCau * (float)soCauDung;
 
-            KetQuaBaiThi kq = new KetQuaBaiThi
-            {
-                Diem = diem,
-                HocKy = "Hoc Ky 4",
-                NienKhoa = "2021-2022",
-                MaSVMH = SinhVien_MonHocBLL.getSinhVienMonHoc(sinhVien.Mssv, Sv_lt.LichThi.MonHoc.MaMonHoc).MaSVMH
-            };
-            KetQuaBaiThiBLL.InsertKetQua(kq);
-            FrmXemDiem f = new FrmXemDiem(soCauDung, soCauSai, soChuaLam, diem);
-            f.ShowDialog();
-        }
+        //    KetQuaBaiThi kq = new KetQuaBaiThi
+        //    {
+        //        Diem = diem,
+        //        HocKy = "Hoc Ky 4",
+        //        NienKhoa = "2021-2022",
+        //        MaSVMH = HocSinh_MonHoc.getSinhVienMonHoc(sinhVien.Mssv, Sv_lt.LichThi.MonHoc.MaMonHoc).MaSVMH
+        //    };
+        //    KetQuaBaiThiBLL.InsertKetQua(kq);
+        //    FrmXemDiem f = new FrmXemDiem(soCauDung, soCauSai, soChuaLam, diem);
+        //    f.ShowDialog();
+        //}
         private void btnNopBai_Click(object sender, EventArgs e)
         {
-            NopBai(); 
+            //NopBai();
         }
         private void NopBai()
         {
-            KiemTraBaiLam();
+            //KiemTraBaiLam();
 
-            int i = 0;
-            foreach (BaiThi bai in ltBaiThi)
-            {
-                if (bai.TrangThai.Equals("Chưa làm"))
-                {
-                    i++;
-                }
-            }
-            string str = "Bạn có chắc muốn nộp bài không";
-            if (i > 0)
-            {
-                str = "Có " + i + " câu chưa làm. Bạn có muốn nộp luôn hay hông";
-            }
-            if (MessageBox.Show(str, "Thông báo", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                try
-                {
-                    BaiThiBLL.InsertBaiThi(ltBaiThi);
-                    SinhVien_LichThiBLL.UpdateTrangThai(maSV_LT, true);
-                    MessageBox.Show("Nộp bài thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    TinhDiem();
-                    this.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Nộp bài không thành công. Vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            //int i = 0;
+            //foreach (ChiTietBaiThi bai in ltBaiThi)
+            //{
+            //    if (bai.TrangThai.Equals("Chưa làm"))
+            //    {
+            //        i++;
+            //    }
+            //}
+            //string str = "Bạn có chắc muốn nộp bài không";
+            //if (i > 0)
+            //{
+            //    str = "Có " + i + " câu chưa làm. Bạn có muốn nộp luôn hay hông";
+            //}
+            //if (MessageBox.Show(str, "Thông báo", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            //{
+            //    try
+            //    {
+            //        BaiThiBLL.InsertBaiThi(ltBaiThi);
+            //        SinhVien_LichThiBLL.UpdateTrangThai(maSV_LT, true);
+            //        MessageBox.Show("Nộp bài thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        TinhDiem();
+            //        this.Close();
+            //    }
+            //    catch
+            //    {
+            //        MessageBox.Show("Nộp bài không thành công. Vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    }
+            //}
         }
 
         private void rdoBtnC_CheckedChanged(object sender, EventArgs e)

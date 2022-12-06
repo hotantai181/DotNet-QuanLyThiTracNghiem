@@ -9,11 +9,11 @@ namespace GUI
     {
 
         bool isLogout = false;
-        private SinhVien sinhVien;
+        private HocSinh sinhVien;
 
-        public SinhVien SinhVien { get => sinhVien; set => sinhVien = value; }
+        public HocSinh SinhVien { get => sinhVien; set => sinhVien = value; }
 
-        public FrmMainSinhVien(SinhVien sinhVien)
+        public FrmMainSinhVien(HocSinh sinhVien)
         {
             InitializeComponent();
             SinhVien = sinhVien;
@@ -37,21 +37,18 @@ namespace GUI
 
         private void mnHome_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FrmThongTinSinhVien(SinhVien));
+            OpenChildForm(new FrmThongTinSinhVien(sinhVien));
         }
 
         private void mnXemLichThi_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FrmXemLichThi(sinhVien));
+            OpenChildForm(new OnLuyenThIThu(sinhVien));
         }
 
         private void mnThi_Click(object sender, EventArgs e)
         {
 
-            FrmChonLichThi f = new FrmChonLichThi(sinhVien);
-            this.Hide();
-            f.ShowDialog();
-            this.Show();
+         
         }
 
         private void FrmMainSinhVien_FormClosing(object sender, FormClosingEventArgs e)

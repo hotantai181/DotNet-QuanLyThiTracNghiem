@@ -92,8 +92,6 @@ namespace GUI
             maMon = cbbKhoa.SelectedValue.ToString();
 
         }
-
-        List<Chuong> listChuong;
         private void LoadChuong(string maMon)
         {
           
