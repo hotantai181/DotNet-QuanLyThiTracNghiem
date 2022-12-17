@@ -42,26 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChiTietBaiThiDAL.cs" />
     <Compile Include="ChiTietDeThiDAL.cs" />
     <Compile Include="ChuongDAL.cs" />
     <Compile Include="DeThiDAL.cs" />
     <Compile Include="GiaoVienDAL.cs" />
     <Compile Include="KetQuaBaiThiDAL.cs" />
-    <Compile Include="KhoaDAL.cs" />
     <Compile Include="LopDAL.cs" />
     <Compile Include="MonHocDAL.cs" />
-    <Compile Include="NganHangCauHoiDAL.cs" />
+    <Compile Include="CauHoiDAL.cs" />
     <Compile Include="PhieuTaoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SinhVienDAL.cs" />
-    <Compile Include="SinhVien_MonHocDAL.cs" />
-    <Compile Include="ThongKeDiemDAL.cs" />
+    <Compile Include="HocSinhDAL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="BaiThiDAL.cs" />
-    <Compile Include="LichThiDAL.cs" />
-    <Compile Include="SinhVien_LichThiDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DTO\DTO.csproj">

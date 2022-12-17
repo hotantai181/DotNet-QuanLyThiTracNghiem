@@ -39,7 +39,7 @@ namespace GUI
 
             drvDSPhieu.DataSource = bus_phieuTao.getPhieuTaos(_maGV);
             drvDSPhieu.ClearSelection();
-
+            
             clear();
         }
 
@@ -51,8 +51,7 @@ namespace GUI
             txtSoLuongDe.Clear();
             txtTgianLamBai.Clear();
             txtTrangThai.Clear();
-
-            txtKhoa.Text = cboMonHoc.Text = string.Empty;
+            cboMonHoc.Text = string.Empty;
 
             cboMonHoc.DataSource = null;
 
@@ -60,11 +59,9 @@ namespace GUI
             {
                 drvSoLuongCauHoi.DataSource = null;
 
-                drvSoLuongCauHoi.Columns.Add("Chuong", "Chương");
-                drvSoLuongCauHoi.Columns["Chuong"].DataPropertyName = "TenChuong";
-
                 drvSoLuongCauHoi.Columns.Add("SoLuong", "Số câu hỏi");
                 drvSoLuongCauHoi.Columns["SoLuong"].DataPropertyName = "SoCauHoi";
+
 
                 drvSoLuongCauHoi.Columns.Add("Ma", "Ma");
                 drvSoLuongCauHoi.Columns["Ma"].DataPropertyName = "Ma";
@@ -73,9 +70,16 @@ namespace GUI
                 drvSoLuongCauHoi.Columns.Add("MaChuong", "Ma chuong");
                 drvSoLuongCauHoi.Columns["MaChuong"].DataPropertyName = "MaChuong";
                 drvSoLuongCauHoi.Columns["MaChuong"].Visible = false;
+
             }
         }
 
+        public void loadMonHoc()
+        {
+            cboMonHoc.DataSource = MonHocBLL.GetMonHocs();
+            cboMonHoc.DisplayMember = "TenMonHoc";
+            cboMonHoc.ValueMember = "MaMonHoc";
+        }
         private void drvDSPhieu_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // thông tin phiếu tạo đề 
@@ -90,16 +94,16 @@ namespace GUI
 
             tongSoCauConLai = phieuTaoDe.SoCauHoi ?? 0;
 
-            txtKhoa.Text = KhoaBLL.Khoa(gv.MaKhoa).TenKhoa;
+           
 
             cboMonHoc.DataSource = MonHocBLL.GetMonHoc(phieuTaoDe.MaMonHoc);
             cboMonHoc.DisplayMember = "TenMonHoc";
             cboMonHoc.ValueMember = "MaMonHoc";
 
-            drvSoLuongCauHoi.DataSource = bus_phieuTao.getDS_cauHoi(phieuTaoDe.MaPhieuTaoDe);
+            //drvSoLuongCauHoi.DataSource = bus_phieuTao.getDS_cauHoi(phieuTaoDe.MaPhieuTaoDe);
 
-            // cập nhật tổng số lượng câu còn lại
-            tongSoCauConLai -= bus_phieuTao.getDS_cauHoi(phieuTaoDe.MaPhieuTaoDe).Sum(i => i.SoCauHoi) ?? 0;
+            //// cập nhật tổng số lượng câu còn lại
+            // tongSoCauConLai -= Int32.Parse(bus_phieuTao.getDS_cauHoi(phieuTaoDe.MaPhieuTaoDe).Sum(i => i.SoCauHoi).ToString());
 
             _isChange = btnLuu.Enabled = pnThongTinChung.Enabled = pnThongTinPhieu.Enabled = false;
         }
@@ -121,8 +125,8 @@ namespace GUI
 
             pnThongTinPhieu.Enabled = pnThongTinChung.Enabled = true;
 
-            txtKhoa.Text = KhoaBLL.Khoa(gv.MaKhoa).TenKhoa;
 
+            loadMonHoc();
             // mã phiếu tạo
             txtMaPhieu.Text = bus_phieuTao.getNewMaPhieu();
 
@@ -130,12 +134,8 @@ namespace GUI
             txtNgayLap.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
             btnLuu.Enabled = true;
-
             _isChange = true;
-            cboMonHoc.DataSource = MonHocBLL.GetMonHocs(gv.MaKhoa);
-            cboMonHoc.DisplayMember = "TenMonHoc";
-            cboMonHoc.ValueMember = "MaMonHoc";
-            cboMonHoc.Text = string.Empty;
+            
         }
 
         private void checkNumber(object sender, KeyPressEventArgs e)
@@ -148,28 +148,11 @@ namespace GUI
             }
         }
 
-        private void sửaSốCâuHỏiHỏiChươngToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // sửa thông tin số câu ở mỗi chương
-        
-            frmThemSoCauHoiChuong frm = new frmThemSoCauHoiChuong();
-            frm.lstChuong = bus_phieuTao.getDs_cauHoi_conLai(cboMonHoc.SelectedValue.ToString(), string.Empty);
-            frm.maPhieuTaoDe = txtMaPhieu.Text;
-            frm.maChuong = drvSoLuongCauHoi.CurrentRow.Cells["MaChuong"].Value.ToString();
-            frm.maPt_c = drvSoLuongCauHoi.CurrentRow.Cells["Ma"].Value.ToString(); // mã phiếu tạo chương
-            frm.soCauHoi = int.Parse(drvSoLuongCauHoi.CurrentRow.Cells["SoLuong"].Value.ToString());
-            frm.tongCauHoiConLai = tongSoCauConLai;
-            frm.ShowDialog();
-
-            reLoad();
-           
-        }
+       
 
         private void reLoad()
         {
-            tongSoCauConLai = int.Parse(txtSoLuongCauHoi.Text.Trim());
-            drvSoLuongCauHoi.DataSource = bus_phieuTao.getDS_cauHoi(txtMaPhieu.Text);
-            tongSoCauConLai -= bus_phieuTao.getDS_cauHoi(txtMaPhieu.Text).Sum(i => i.SoCauHoi) ?? 0;
+            
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
@@ -272,12 +255,8 @@ namespace GUI
         {
             btnLuu.Enabled = pnThongTinChung.Enabled = pnThongTinPhieu.Enabled = true;
 
-            var valKhoa = gv.MaKhoa;
             var valMonHoc = cboMonHoc.SelectedValue;
-            
-            txtKhoa.Text = KhoaBLL.Khoa(gv.MaKhoa).TenKhoa;
-
-            cboMonHoc.DataSource = MonHocBLL.GetMonHocs(gv.MaKhoa);
+            cboMonHoc.DataSource = MonHocBLL.GetMonHocs();
             cboMonHoc.DisplayMember = "TenMonHoc";
             cboMonHoc.ValueMember = "MaMonHoc";
             cboMonHoc.SelectedValue = valMonHoc;
@@ -292,27 +271,27 @@ namespace GUI
                 return;
             }
 
-            frmThemSoCauHoiChuong frm = new frmThemSoCauHoiChuong();
-            frm.lstChuong = bus_phieuTao.getDs_cauHoi_conLai(cboMonHoc.SelectedValue.ToString(), txtMaPhieu.Text);
-            frm.maPhieuTaoDe = txtMaPhieu.Text;
-            frm.tongCauHoiConLai = tongSoCauConLai;
-            frm.ShowDialog();
+            //frmThemSoCauHoiChuong frm = new frmThemSoCauHoiChuong();
+            //frm.lstChuong = bus_phieuTao.getDs_cauHoi_conLai(cboMonHoc.SelectedValue.ToString(), txtMaPhieu.Text);
+            //frm.maPhieuTaoDe = txtMaPhieu.Text;
+            //frm.tongCauHoiConLai = tongSoCauConLai;
+            //frm.ShowDialog();
 
             reLoad();
         }
 
         private void xóaSốCâuHỏiChươngToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Bạn có muốn xóa không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.No)
-                return;
+            //if (MessageBox.Show("Bạn có muốn xóa không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.No)
+            //    return;
 
-            if (bus_phieuTao.remove_phieuTaoDe_chuong(int.Parse(drvSoLuongCauHoi.CurrentRow.Cells["Ma"].Value.ToString())))
-            {
-                MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            //if (bus_phieuTao.remove_phieuTaoDe_chuong(int.Parse(drvSoLuongCauHoi.CurrentRow.Cells["Ma"].Value.ToString())))
+            //{
+            //    MessageBox.Show("Xóa thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
 
-                reLoad();
+            //    reLoad();
 
-            }
+            //}
         }
     }
 }

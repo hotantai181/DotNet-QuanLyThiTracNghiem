@@ -7,11 +7,11 @@ namespace GUI
 {
     public partial class FrmThongTinSinhVien : Form
     {
-        private SinhVien sinhVien;
+        private HocSinh sinhVien;
 
-        public SinhVien SinhVien { get => sinhVien; set => sinhVien = value; }
+        public HocSinh SinhVien { get => sinhVien; set => sinhVien = value; }
 
-        public FrmThongTinSinhVien(SinhVien sinhVien)
+        public FrmThongTinSinhVien(HocSinh sinhVien)
         {
             InitializeComponent();
             SinhVien = sinhVien;
@@ -28,15 +28,17 @@ namespace GUI
         }
         private void SetData()
         {
-            txtMssv.Text = SinhVien.Mssv;
-            txtHoTen.Text = SinhVien.HoTen;
-            txtCMND.Text = SinhVien.CMND_CCCD;
-            txtGioiTinh.Text = SinhVien.GioiTinh;
-            txtNgaySinh.Text = SinhVien.NgaySinh.ToString();
-            txtLop.Text = SinhVien.Lop.TenLop;
-            txtDiaChi.Text = SinhVien.DiaChi;
-            txtSDT.Text = SinhVien.Sdt;
-            txtEmail.Text = SinhVien.Email;
+            textBox3.Text = SinhVien.Mssv;
+            textBox4.Text = SinhVien.HoTen;
+            textBox5.Text = SinhVien.CMND_CCCD;
+            textBox10.Text = SinhVien.GioiTinh;
+            string st = sinhVien.NgaySinh.ToString();
+            textBox11.Text = String.Format("{0:dd/MM/yyyy}",st);
+            //textBox6.Text = SinhVien.Lop.TenLop;
+            textBox7.Text = SinhVien.DiaChi;
+            textBox8.Text = SinhVien.Sdt;
+            textBox9.Text = SinhVien.Email;
+            textBox1.Text = SinhVien.MatKhau;
         }
 
         private void txtNgaySinh_Click(object sender, EventArgs e)
@@ -45,6 +47,11 @@ namespace GUI
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btncapnhat_Click(object sender, EventArgs e)
         {
 
         }

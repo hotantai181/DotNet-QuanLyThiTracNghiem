@@ -26,22 +26,27 @@ namespace GUI
             strMucDo = "";
 
             strDapAn = "";
+            loadMonHoc();
         }
 
         private void CheckMucDo()
         {
             if (rdoTrungBinh.Checked)
             {
-                strMucDo = "Trung binh";
+                strMucDo ="Nhan biet";
             }
             else if (rdoKho.Checked)
             {
-                strMucDo = "Kho";
+                strMucDo = "Thong hieu";
             }
             else if (rdoDe.Checked)
             {
-                strMucDo = "De";
+                strMucDo = "Van dung";
             }
+            else if(radioButton1.Checked)
+            {
+                strMucDo = "Van dung cao";
+            }    
         }
         private void CheckDapAn()
         {
@@ -64,44 +69,21 @@ namespace GUI
         }
         private void LoadMonHoc()
         {
-            listMonHoc = MonHocBLL.GetMonHocs(cbbKhoa.SelectedValue.ToString());
-            cbbMonHoc.Text = "";
-            cbbMonHoc.DataSource = listMonHoc;
-            cbbMonHoc.DisplayMember = "TenMonHoc";
-            cbbMonHoc.ValueMember = "MaMonHoc";
-            if (listMonHoc.Count > 1)
-            {
-                cbbMonHoc.SelectedIndex = 0;
-            }
-        }
-        List<Khoa> listKhoa;
-        private void LoadKhoa()
-        {
-            listKhoa = KhoaBLL.GetDepartment();
 
-            cbbKhoa.DataSource = listKhoa;
-            cbbKhoa.ValueMember = "MaKhoa";
-            cbbKhoa.DisplayMember = "TenKhoa";
-            if (listKhoa.Count > 1)
-            {
-                cbbKhoa.SelectedIndex = 0;
-            }
         }
+
         private void cbbKhoa_SelectedIndexChanged(object sender, EventArgs e)
         {
-            maMon = cbbKhoa.SelectedValue.ToString();
+
 
         }
-
-        List<Chuong> listChuong;
         private void LoadChuong(string maMon)
         {
-          
+
         }
 
         private void FrmNganHangCauHoi_Load(object sender, EventArgs e)
         {
-            LoadKhoa();
             LoadMonHoc();
 
             if (cbbMonHoc.SelectedValue != null)
@@ -114,7 +96,7 @@ namespace GUI
 
         private void cbbMonHoc_SelectedIndexChanged(object sender, EventArgs e)
         {
-            maMon = cbbKhoa.SelectedValue.ToString();
+
             LoadChuong(maMon);
         }
 
@@ -145,11 +127,11 @@ namespace GUI
             }
         }
         ErrorProvider error = new ErrorProvider();
-      
+
 
         private void resetForm()
         {
-            cbbKhoa.SelectedIndex = 0;
+
             cbbMonHoc.SelectedIndex = 0;
             rdoTrungBinh.Checked = false;
             rdoKho.Checked = false;
@@ -201,15 +183,15 @@ namespace GUI
                     adapter.Fill(exDataSet);
 
                     DataTable db = exDataSet.Tables[0];
-                    List<NganHangCauHoi> nganHangCauHois = new List<NganHangCauHoi>();
+                    List<CauHoi> nganHangCauHois = new List<CauHoi>();
 
                     foreach (DataRow r in db.Rows)
                     {
                         try
                         {
-                            nganHangCauHois.Add(new NganHangCauHoi
+                            nganHangCauHois.Add(new CauHoi
                             {
-                                CauHoi = r[0].ToString(),
+                                CauHoi1 = r[0].ToString(),
                                 DapAnA = r[1].ToString(),
                                 DapAnB = r[2].ToString(),
                                 DapAnC = r[3].ToString(),
@@ -231,7 +213,7 @@ namespace GUI
                     foreach (var item in nganHangCauHois)
                     {
                         dgvDanhSachCauHoi.Rows.Add(
-                            item.CauHoi,
+                            item.MaCauHoi,
                             item.DapAnA,
                             item.DapAnB,
                             item.DapAnC,
@@ -247,7 +229,12 @@ namespace GUI
                 }
             }
         }
-
+        public void loadMonHoc()
+        {
+            cbbMonHoc.DataSource = MonHocBLL.GetMonHocs();
+            cbbMonHoc.DisplayMember = "TenMonHoc";
+            cbbMonHoc.ValueMember = "MaMonHoc";
+        }
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
@@ -317,11 +304,11 @@ namespace GUI
             {
                 MessageBox.Show("Phải chọn đáp án đúng"); return;
             }
-        
 
-            NganHangCauHoi nganHangCauHoi = new NganHangCauHoi
+
+            CauHoi nganHangCauHoi = new CauHoi
             {
-                CauHoi = txtNoiDung.Text,
+                MaCauHoi = 1,
                 DapAnA = txtA.Text,
                 DapAnB = txtB.Text,
                 DapAnC = txtC.Text,
@@ -334,7 +321,7 @@ namespace GUI
             };
 
             dgvDanhSachCauHoi.Rows.Add(
-                nganHangCauHoi.CauHoi, 
+                nganHangCauHoi.MaCauHoi, 
                 nganHangCauHoi.DapAnA, 
                 nganHangCauHoi.DapAnB, 
                 nganHangCauHoi.DapAnC, 
@@ -358,14 +345,14 @@ namespace GUI
         {
             if (MessageBox.Show("Lưu lại?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                List<NganHangCauHoi> listNganHang = new List<NganHangCauHoi>();
+                List<CauHoi> listNganHang = new List<CauHoi>();
                 foreach (DataGridViewRow r in dgvDanhSachCauHoi.Rows)
                 {
                     try
                     {
-                        listNganHang.Add(new NganHangCauHoi
+                        listNganHang.Add(new CauHoi
                         {
-                            CauHoi = r.Cells[0].Value.ToString(),
+                            CauHoi1 = r.Cells[0].Value.ToString(),
                             DapAnA = r.Cells[1].Value.ToString(),
                             DapAnB = r.Cells[2].Value.ToString(),
                             DapAnC = r.Cells[3].Value.ToString(),
@@ -383,7 +370,7 @@ namespace GUI
                     }
                 }
 
-                if (NganHangCauHoiBLL.InsertAll(listNganHang))
+                if (CauHoiBLL.InsertAll(listNganHang))
                 {
                     MessageBox.Show("Thêm thành công");
                     resetForm();

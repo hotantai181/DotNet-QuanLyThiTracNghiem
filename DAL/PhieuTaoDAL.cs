@@ -34,24 +34,12 @@ namespace DAL
                     MaPhieu = pt.MaPhieuTaoDe,
                     NgayLap = string.Format("{0:dd/MM/yyyy}", pt.NgayLap),
                     TrangThai = pt.TrangThai,
+                    MaMonHoc = pt.MaMonHoc,
                 }).ToList();
         }
         public PhieuTaoDe get_tt_phieuTao(string pMaPhieu)
         {
             return db.PhieuTaoDes.Where(p => p.MaPhieuTaoDe.Equals(pMaPhieu)).FirstOrDefault();
-        }
-        public List<PhieuTaoDe_Chuong> getPhieuTaoDe_Chuongs()
-        {
-            return db.PhieuTaoDe_Chuongs.ToList();
-        }
-        public List<MucDo> getMucDos()
-        {
-            var a = db.MucDos.ToList();
-            return db.MucDos.ToList();
-        }
-        public List<MucDo> getMucDos(int pMaPT_c)
-        {
-            return db.MucDos.Where(md => md.MaPTD_C == pMaPT_c).ToList();
         }
         public bool add_phieuTao(PhieuTaoDe pt)
         {
@@ -64,41 +52,6 @@ namespace DAL
                 return true;
             }
             catch (Exception)
-            {
-                return false;
-            }
-        }
-        public bool add_phieuTao_chuong(PhieuTaoDe_Chuong pt)
-        {
-            try
-            {
-                db.ExecuteCommand("SET IDENTITY_INSERT PhieuTaoDe_chuong ON");
-                db.PhieuTaoDe_Chuongs.InsertOnSubmit(pt);
-
-                db.SubmitChanges();
-                db.ExecuteCommand("SET IDENTITY_INSERT PhieuTaoDe_chuong OFF");
-
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
-        public bool add_mucDo_chuong(MucDo pMucDo)
-        {
-            try
-            {
-                db.ExecuteCommand("SET IDENTITY_INSERT MucDo ON");
-
-                db.MucDos.InsertOnSubmit(pMucDo);
-
-                db.SubmitChanges();
-                db.ExecuteCommand("SET IDENTITY_INSERT MucDo OFF");
-
-                return true;
-            }
-            catch (Exception e)
             {
                 return false;
             }
@@ -128,57 +81,53 @@ namespace DAL
         {
             return db.PhieuTaoDes.ToList();
         }
-        public int getMaPT_chuong()
-        {
-            return db.PhieuTaoDe_Chuongs.OrderByDescending(pt_c => pt_c.MaPTD_C).FirstOrDefault().MaPTD_C;
-        }
-        public List<DSTaoDT> getDS_cauHoi(string pMaPhieuTao)
-        {
-            return db.PhieuTaoDe_Chuongs
-                .Where(pt_c => pt_c.MaPhieuTaoDe.Equals(pMaPhieuTao))
-                .Select(pt_c => new DSTaoDT
-                {
-                    MaChuong = db.Chuongs.Where(c => c.MaChuong.Equals(pt_c.MaChuong)).Single().MaChuong,
-                    TenChuong = db.Chuongs.Where(c => c.MaChuong.Equals(pt_c.MaChuong)).Single().TenChuong,
-                    SoCauHoi = pt_c.SoLuongCau,
-                    Ma = pt_c.MaPTD_C
-                }).OrderBy(pt_c => pt_c.MaChuong)
-                .ToList();
-        }
+        //public List<DSTaoDT> getDS_cauHoi(string pMaPhieuTao)
+        //{
+        //    return db.CauHois
+        //        .Where(pt_c => pt_c.MaPhieuTaoDe.Equals(pMaPhieuTao))
+        //        .Select(pt_c => new DSTaoDT
+        //        {
+        //            MaChuong = db.Chuongs.Where(c => c.MaChuong.Equals(pt_c.MaChuong)).Single().MaChuong,
+        //            TenChuong = db.Chuongs.Where(c => c.MaChuong.Equals(pt_c.MaChuong)).Single().TenChuong,
+        //            SoCauHoi = pt_c.SoLuongCau,
+        //            Ma = pt_c.MaPTD_C
+        //        }).OrderBy(pt_c => pt_c.MaChuong)
+        //        .ToList();
+        //}
 
-        public List<Chuong> getDs_cauHoi_conLai(string pMaMH, string pMaPhieuTao)
-        {
-            return db.Chuongs
-                .Where(c => c.MaMonHoc.Equals(pMaMH) &&
-                    !db.PhieuTaoDe_Chuongs.Where(pt => pt.MaPhieuTaoDe.Equals(pMaPhieuTao))
-                        .Select(pt => pt.MaChuong).Contains(c.MaChuong))
-                .ToList();
-        }
+        //public List<Chuong> getDs_cauHoi_conLai(string pMaMH, string pMaPhieuTao)
+        //{
+        //    return db.Chuongs
+        //        .Where(c => c.MaMonHoc.Equals(pMaMH) &&
+        //            !db.PhieuTaoDe_Chuongs.Where(pt => pt.MaPhieuTaoDe.Equals(pMaPhieuTao))
+        //                .Select(pt => pt.MaChuong).Contains(c.MaChuong))
+        //        .ToList();
+        //}
 
-        public bool remove_phieuTaoDe_chuong(int pMaPTD_C)
-        {
-            try
-            {
-                // xóa data trong bảng mức độ
-                var mucDo = db.MucDos.Where(md => md.MaPTD_C == pMaPTD_C)
-                    .ToList();
+        //public bool remove_phieuTaoDe_chuong(int pMaPTD_C)
+        //{
+        //    try
+        //    {
+        //        // xóa data trong bảng mức độ
+        //        var mucDo = db.MucDos.Where(md => md.MaPTD_C == pMaPTD_C)
+        //            .ToList();
 
-                db.MucDos.DeleteAllOnSubmit(mucDo);
+        //        db.MucDos.DeleteAllOnSubmit(mucDo);
 
-                PhieuTaoDe_Chuong ptd_c = db.PhieuTaoDe_Chuongs
-                    .Where(pt => pt.MaPTD_C == pMaPTD_C).Single();
+        //        PhieuTaoDe_Chuong ptd_c = db.PhieuTaoDe_Chuongs
+        //            .Where(pt => pt.MaPTD_C == pMaPTD_C).Single();
 
-                db.PhieuTaoDe_Chuongs.DeleteOnSubmit(ptd_c);
+        //        db.PhieuTaoDe_Chuongs.DeleteOnSubmit(ptd_c);
 
-                db.SubmitChanges();
+        //        db.SubmitChanges();
 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+        //        return true;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+        //}
         public bool remove_phieuTaoDe(string pMaPTD)
         {
             try
@@ -211,14 +160,13 @@ namespace DAL
 
             // kiểm tra tổng số câu các chương bằng với tổng số câu trên phiếu tạo
             int tongSoCau_chuong = 0;
-
-            var ttpt_chuong = ttpt.PhieuTaoDe_Chuongs
-                .Where(pt_c => pt_c.MaPhieuTaoDe.Equals(pMaPT)).ToList();
+            string dt = db.DeThis.Where(pt => pt.MaPhieuTaoDe.Equals(ttpt)).ToString();
+            var ttpt_chuong = db.ChiTietDeThis.Where(pt => pt.MaDe.Equals(dt)).ToList();
 
             ttpt_chuong.ForEach(pt_c =>
             {
-                var a = db.MucDos.Where(md => md.MaPTD_C == pt_c.MaPTD_C).Sum(md => md.SoCau);
-                tongSoCau_chuong += a ?? 0;
+                var a = db.CauHois.Where(md => md.MaCauHoi == pt_c.MaCauHoi).Sum(md => md.MaCauHoi);
+                tongSoCau_chuong += a ;
             });
 
             if (tongSoCau_chuong != ttpt.SoCauHoi)
@@ -249,20 +197,16 @@ namespace DAL
         {
             try
             {
-                int? _soLuong_deThi = db.PhieuTaoDes
-                .Where(pt => pt.MaPhieuTaoDe.Equals(pMaPT))
-                .Select(pt => pt.SoLuongDe).Single();
+                PhieuTaoDe ptd = db.PhieuTaoDes.Where(pt => pt.MaPhieuTaoDe.Equals(pMaPT)).FirstOrDefault();
+                int sld = Int32.Parse(ptd.SoLuongDe.ToString());
 
-                int idDe = int.Parse(db.DeThis
-                    .OrderByDescending(dt => dt.MaDe)
-                    .Select(dt => dt.MaDe)
-                    .FirstOrDefault().Replace("DT", string.Empty));
-
-                for (int i = 1; i <= (_soLuong_deThi ?? 0); i++)
+                string ma = pMaPT.Substring(2);
+               
+                for (int i = 1; i <= sld; i++)
                 {
                     db.DeThis.InsertOnSubmit(new DeThi
                     {
-                        MaDe = string.Format("DT{0:00}", idDe + i),
+                        MaDe = string.Format("DT{0,00}" + pMaPT, int.Parse(ma) + i ),
                         MaPhieuTaoDe = pMaPT
                     });
 
@@ -276,60 +220,215 @@ namespace DAL
             }
         }
 
-        public bool taoCTDeThi(string pMaPT)
+        public int? getTGLamBai(string pMaPhieu)
+        {
+            PhieuTaoDe ttpt = db.PhieuTaoDes.Where(pt => pt.MaPhieuTaoDe.Equals(pMaPhieu)).FirstOrDefault();
+            int? tglambai = ttpt.ThoiGianLamBai;
+            return tglambai;
+        }
+
+        public bool taoDeThiThuCong(string pMaPT)
         {
             try
             {
-                string _maMH = db.PhieuTaoDes.Where(pt => pt.MaPhieuTaoDe.Equals(pMaPT)).Select(pt => pt.MaMonHoc).Single();
-
                 List<DeThi> lstDt = db.DeThis.Where(dt => dt.MaPhieuTaoDe.Equals(pMaPT)).ToList();
-                List<PhieuTaoDe_Chuong> lstPT_c = db.PhieuTaoDe_Chuongs.Where(pt_c => pt_c.MaPhieuTaoDe.Equals(pMaPT)).ToList();
-                // tạo chi tiết cho từng đề thi
-                lstDt.ForEach(dt => // get n đề thi
+                int? _soCauHoi = db.PhieuTaoDes.Where(pt => pt.MaPhieuTaoDe.Equals(pMaPT)).Select(pt => pt.SoCauHoi).Single();
+
+                lstDt.ForEach(dt =>
                 {
-                    lstPT_c.ForEach(pt_c => // mỗi đề có n chương học
+                    ChiTietDeThi ctdt = new ChiTietDeThi();
+                    // thực hiện câu hỏi
+                    db.ExecuteCommand("SET IDENTITY_INSERT ChiTietDeThi ON");
+
+                    db.ChiTietDeThis.InsertOnSubmit(ctdt);
+
+                    db.SubmitChanges();
+
+                    db.ExecuteCommand("SET IDENTITY_INSERT ChiTietDeThi OFF");
+                });
+                return true;
+            }
+            catch(Exception e)
+            {
+                throw e;
+                return false;
+            }
+        }
+        public bool taoCTDeThiThuCong(string pMaPT,ChiTietDeThi chiTiet)
+        {
+            using (var dv = new QLThiTracNghiemDataContext())
+            {
+ 
+            try
+            {
+                    int? _soCauHoi = dv.PhieuTaoDes.Where(pt => pt.MaPhieuTaoDe.Equals(pMaPT)).Select(pt => pt.SoCauHoi).Single();
+                    DeThi lstDt = dv.DeThis.Where(dt => dt.MaPhieuTaoDe.Equals(pMaPT)).FirstOrDefault();
+                    int ctdt = dv.ChiTietDeThis.Where(dt => dt.MaDe.Equals(lstDt.MaDe)).Count();
+                    if(ctdt <= _soCauHoi)
                     {
-                        int? _maChuong = pt_c.MaChuong;
+                        dv.ChiTietDeThis.InsertOnSubmit(chiTiet);
+                        dv.SubmitChanges();
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                return true;
+            }
+            catch(Exception e)
+            {
+                throw e;
+                return false;
+            }
+            }
+        }
+        public bool ranDomCTDThiConLai(string pMaDe, string pMaPhieuTao)
+        {
+            try
+            {
+                //DeThi lstDt = db.DeThis.Where(dt => dt.MaDe.Equals(pMaDe)).FirstOrDefault();
+                //List<DeThi> lstDTCL = db.DeThis.Where(dt => dt.MaDe.Equals(pMaDe)).ToList();
+                //List<ChiTietDeThi> ctdt = db.ChiTietDeThis.Where(dt => dt.MaDe.Equals(lstDt.MaDe)).ToList();
+                //int? _soCauHoi = db.PhieuTaoDes.Where(pt => pt.MaPhieuTaoDe.Equals(lstDt.MaPhieuTaoDe)).Select(pt => pt.SoCauHoi).Single();
+                //string _maMH = db.PhieuTaoDes.Where(pt => pt.MaPhieuTaoDe.Equals(pMaDe)).Select(pt => pt.MaMonHoc).Single();
 
-                        pt_c.MucDos.ToList().ForEach(md => // mỗi chương có 3 mức độ
+                //for (int i = 1; i <= lstDTCL.Count; i++)  // Lap so de thi con lai
+                //{
+                //    ChiTietDeThi ctdtKT = new ChiTietDeThi();
+                //    if (ctdtKT.MaDe != lstDTCL[i].MaDe)
+                //    {   
+                //        ctdt.ForEach(dt =>  // Lap List Chi Tiet De Thi Trong Da Tao 
+                //        {
+                //            List<CauHoi> cauHoi = db.CauHois.Where(ch => ch.MaMonHoc.Equals(_maMH)).ToList();
+
+                //            for (int j = 0; j < _soCauHoi; j++)
+                //        {
+
+
+                //                Random r = new Random();  // Tao Moi Ham RanDom
+                //                int index = r.Next(ctdt.Count);  // RanDom Trong DS Cau Hoi Trong Chi Tiet De Thi
+
+
+                //                ctdtKT.MaDe = lstDTCL[i].MaDe;
+                //                ctdtKT.MaCauHoi = dt.MaCauHoi;
+
+                //                cauHoi.RemoveAt(index);
+
+                //                    // thực hiện câu hỏi
+                //                db.ExecuteCommand("SET IDENTITY_INSERT ChiTietDeThi ON");
+
+                //                db.ChiTietDeThis.InsertOnSubmit(ctdtKT);
+
+                //                db.SubmitChanges();
+
+                //                db.ExecuteCommand("SET IDENTITY_INSERT ChiTietDeThi OFF");
+                //            }
+                //        });
+                //    }
+                //}
+                try
+                {
+                    DeThi lstDtcl = db.DeThis.Where(dt => dt.MaDe.Equals(pMaDe)).FirstOrDefault();
+
+                    List<DeThi> lstDt = db.DeThis.Where(dt => dt.MaPhieuTaoDe.Equals( pMaPhieuTao)).ToList();
+                    int z = 0;
+                    // tạo chi tiết cho từng đề thi
+                    lstDt.ForEach(dt => // get n đề thi
+                    {
+                        // lấy câu hỏi từ chi tiet de th
+                        List<ChiTietDeThi> ct = db.ChiTietDeThis.Where(g => g.MaDe.Equals(lstDtcl.MaDe)).ToList();
+                       
+                        string maDeThi = lstDt[z].MaDe;
+                     
+                        if (dt.MaDe != lstDtcl.MaDe)
                         {
-                            int? soCauHoi = md.SoCau; // số câu hỏi ở từng mức độ
-
-                            // lấy câu hỏi từ ngân hàng câu hỏi
-                            List<NganHangCauHoi> cauHoi = db.NganHangCauHois
-                                .Where(ch => ch.MaMonHoc.Equals(_maMH) && ch.MaChuong == _maChuong && ch.MucDo.Equals(md.MucDo1)).ToList();
-
-                            for (int i = 0; i < (soCauHoi ?? 0); i++)
+                            for (int i = 0; i <  ct.Count; i++)
                             {
-                                Random r = new Random();
-                                int index = r.Next(cauHoi.Count);
+                                Random r = new Random(); 
+                             
+                                int index = r.Next(ct.Count);
 
                                 ChiTietDeThi ctdt = new ChiTietDeThi();
-                                ctdt.MaDe = dt.MaDe;
-                                ctdt.MaCauHoi = cauHoi[index].MaCauHoi;
+                                ctdt.MaDe = maDeThi;
+                                ctdt.MaCauHoi = ct[index].MaCauHoi;
 
-                                cauHoi.RemoveAt(index);
+                                ct.RemoveAt(index);
 
                                 // thực hiện câu hỏi
                                 db.ExecuteCommand("SET IDENTITY_INSERT ChiTietDeThi ON");
-
                                 db.ChiTietDeThis.InsertOnSubmit(ctdt);
 
                                 db.SubmitChanges();
 
                                 db.ExecuteCommand("SET IDENTITY_INSERT ChiTietDeThi OFF");
                             }
-                        });
+                           
+                        }
+                        z++;
                     });
-                });
+                    return true;
+                }
+                catch (Exception e)
+                {
+                        throw e;
+                    return false;
 
+                }
+                return true;
+            }
+            catch(Exception e)
+            {
+                //throw e;
+                return false;
+            }
+        }
+        public bool taoCTDeThi(string pMaPT)
+        {
+            try
+            {
+                string _maMH = db.PhieuTaoDes.Where(pt => pt.MaPhieuTaoDe.Equals(pMaPT)).Select(pt => pt.MaMonHoc).Single();
+                int? _soCauHoi = db.PhieuTaoDes.Where(pt => pt.MaPhieuTaoDe.Equals(pMaPT)).Select(pt => pt.SoCauHoi).Single();
+                List<DeThi> lstDt = db.DeThis.Where(dt => dt.MaPhieuTaoDe.Equals(pMaPT)).ToList();
+                // tạo chi tiết cho từng đề thi
+                lstDt.ForEach(dt => // get n đề thi
+                {
+
+                    // lấy câu hỏi từ ngân hàng câu  hỏi
+                    List<CauHoi> cauHoi = db.CauHois
+                        .Where(ch => ch.MaMonHoc.Equals(_maMH)).ToList();
+
+                    for (int i = 0; i < _soCauHoi; i++)
+                    {
+                        Random r = new Random();
+                        int index = r.Next(cauHoi.Count);
+
+                        ChiTietDeThi ctdt = new ChiTietDeThi();
+                        ctdt.MaChiTietDeThi = 0 + i;
+                        ctdt.MaDe = dt.MaDe;
+                        ctdt.MaCauHoi = cauHoi[index].MaCauHoi;
+
+                        cauHoi.RemoveAt(index);
+
+                        // thực hiện câu hỏi
+                        db.ExecuteCommand("SET IDENTITY_INSERT ChiTietDeThi ON");
+
+                        db.ChiTietDeThis.InsertOnSubmit(ctdt);
+
+                        db.SubmitChanges();
+
+                        db.ExecuteCommand("SET IDENTITY_INSERT ChiTietDeThi OFF");
+                    }
+                });
                 return true;
             }
             catch (Exception e)
             {
                 throw e;
                 return false;
+
             }
+
+            
         }
     }
 }

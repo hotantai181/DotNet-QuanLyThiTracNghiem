@@ -39,5 +39,10 @@ namespace GUI
         {
 
         }
+
+        private void btnQuanLySinhVien_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

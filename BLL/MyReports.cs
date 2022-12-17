@@ -13,7 +13,7 @@ namespace BLL
 {
     public class MyReports
     {
-        public void exportDocument(string mDe, string mHoc, List<BaiThi> baiThis)
+        public void exportDocument(string mDe, string mHoc, List<ChiTietBaiThi> baiThis)
         {
             WordDocument document = new WordDocument();
             //Adding a new section to the document.
@@ -95,13 +95,13 @@ namespace BLL
 
                 textRange = paragraph.AppendText("\r\r") as WTextRange;
 
-                textRange = paragraph.AppendText("Câu hỏi " + i + ": " + item.NganHangCauHoi.CauHoi + "\r") as WTextRange;
+                textRange = paragraph.AppendText("Câu hỏi " + i + ": " + item.CauHoi + "\r") as WTextRange;
                 textRange.CharacterFormat.FontSize = 14f;
                 textRange.CharacterFormat.Bold = true;
                 textRange.CharacterFormat.FontName = "Times New Roman";
 
 
-                textRange = paragraph.AppendText("A: " + item.NganHangCauHoi.DapAnA + "\r") as WTextRange;
+                textRange = paragraph.AppendText("A: " + item.CauHoi + "\r") as WTextRange;
                 textRange.CharacterFormat.FontSize = 14f;
                 textRange.CharacterFormat.FontName = "Times New Roman";
                 if (rsDung.Trim().Equals("A"))
@@ -110,7 +110,7 @@ namespace BLL
                     textRange.CharacterFormat.TextColor = Color.Red;
                 else textRange.CharacterFormat.TextColor = Color.Black;
 
-                textRange = paragraph.AppendText("B: " + item.NganHangCauHoi.DapAnB + "\r") as WTextRange;
+                textRange = paragraph.AppendText("B: " + item.CauHoi + "\r") as WTextRange;
                 textRange.CharacterFormat.FontSize = 14f;
                 textRange.CharacterFormat.FontName = "Times New Roman";
                 if (rsDung.Trim().Equals("B"))
@@ -119,7 +119,7 @@ namespace BLL
                     textRange.CharacterFormat.TextColor = Color.Red;
                 else textRange.CharacterFormat.TextColor = Color.Black;
 
-                textRange = paragraph.AppendText("C: " + item.NganHangCauHoi.DapAnC + "\r") as WTextRange;
+                textRange = paragraph.AppendText("C: " + item.CauHoi + "\r") as WTextRange;
                 textRange.CharacterFormat.FontSize = 14f;
                 textRange.CharacterFormat.FontName = "Times New Roman";
                 if (rsDung.Trim().Equals("C"))
@@ -128,7 +128,7 @@ namespace BLL
                     textRange.CharacterFormat.TextColor = Color.Red;
                 else textRange.CharacterFormat.TextColor = Color.Black;
 
-                textRange = paragraph.AppendText("D: " + item.NganHangCauHoi.DapAnD + "\r") as WTextRange;
+                textRange = paragraph.AppendText("D: " + item.CauHoi + "\r") as WTextRange;
                 textRange.CharacterFormat.FontSize = 14f;
                 textRange.CharacterFormat.FontName = "Times New Roman";
                 if (rsDung.Trim().Equals("D"))

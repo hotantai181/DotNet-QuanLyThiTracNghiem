@@ -16,13 +16,15 @@ namespace GUI
     {
         PhieuTaoBLL bus_phieuTao = new PhieuTaoBLL();
         private bool isValid = false;
-
+        private string _maMonHoc;
         private const string MESSAGE_PHIEU_KHONGHOPLE = "Không hợp lệ";
         private const string MESSAGE_PHIEU_HOPLE = "Đã xác nhận";
 
         public frmTaoDeThi()
         {
             InitializeComponent();
+            btnTaoDe.Enabled = true;
+            btnTaoTC.Enabled = true;
         }
 
 
@@ -34,6 +36,7 @@ namespace GUI
         private void btnTaoDe_Click(object sender, EventArgs e)
         {
             string maPT = drvDSPhieu.CurrentRow.Cells["MaPhieu"].Value.ToString();
+            
             // tạo đề thi
             bus_phieuTao.taoDeThi(maPT);
 
@@ -51,7 +54,7 @@ namespace GUI
             drvDSPhieu.DataSource = bus_phieuTao.getPhieuTaos_NgayLap(txtTimePicker.Text);
             drvDSPhieu.ClearSelection();
 
-            btnTaoDe.Enabled = false;
+            btnTaoDe.Enabled = true;
         }
 
         private void txtTimePicker_ValueChanged(object sender, EventArgs e)
@@ -59,36 +62,36 @@ namespace GUI
             drvDSPhieu.DataSource = bus_phieuTao.getPhieuTaos_NgayLap(txtTimePicker.Text);
             drvDSPhieu.ClearSelection();
 
-            btnTaoDe.Enabled = false;
+            btnTaoDe.Enabled = true;
         }
 
         private void drvDSPhieu_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            isValid = false;
+            //isValid = false;
 
-            string _trangThai = drvDSPhieu.CurrentRow.Cells["TrangThai"].Value.ToString();
+            //string _trangThai = drvDSPhieu.CurrentRow.Cells["TrangThai"].Value.ToString();
 
-            if (_trangThai != string.Empty) return;
+            //if (_trangThai != string.Empty) return;
 
-            try
-            {
-                bus_phieuTao.kiemTraPhieuTao(drvDSPhieu.CurrentRow.Cells["MaPhieu"].Value.ToString());
+            //try
+            //{
+            //    bus_phieuTao.kiemTraPhieuTao(drvDSPhieu.CurrentRow.Cells["MaPhieu"].Value.ToString());
 
-                btnTaoDe.Enabled = _trangThai == string.Empty;
-            }
-            catch (Exception er)
-            {
-                MessageBox.Show(er.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            //    btnTaoDe.Enabled = _trangThai == string.Empty;
+            //}
+            //catch (Exception er)
+            //{
+            //    MessageBox.Show(er.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
 
-                isValid = true;
-            }
+            //    isValid = true;
+            //}
         }
 
         private void drvDSPhieu_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             frmThongTinPTD frm = new frmThongTinPTD();
             frm.MaPhieu = drvDSPhieu.CurrentRow.Cells["MaPhieu"].Value.ToString();
-
+            btnTaoDe.Enabled = true;
             frm.ShowDialog();
         }
 
@@ -116,5 +119,20 @@ namespace GUI
         {
 
         }
+
+        private void btnTaoTC_Click(object sender, EventArgs e)
+        {
+            try
+            {              
+                    frmTaoDeThiThuCong frmTaoDeThiThuCong = new frmTaoDeThiThuCong(drvDSPhieu.CurrentRow.Cells["MaMonHoc"].Value.ToString(), drvDSPhieu.CurrentRow.Cells["MaPhieu"].Value.ToString());
+                    frmTaoDeThiThuCong.Show();    
+            }
+            catch
+            {
+                MessageBox.Show("Vui lòng chọn phiếu tạo đề thi");
+            }
+           
+        }
+        
     }
 }

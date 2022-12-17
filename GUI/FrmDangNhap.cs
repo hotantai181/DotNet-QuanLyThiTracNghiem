@@ -37,9 +37,9 @@ namespace GUI
             Form f;
             if (rdoBtnSinhVien.Checked)
             {
-                if (SinhVienBLL.checkUsername(txtTenDangNhap.Text))
+                if (HocSinhBLL.checkUsername(txtTenDangNhap.Text))
                 {
-                    var sinhVien = SinhVienBLL.checkPassword(txtTenDangNhap.Text, txtMatKhau.Text);
+                    var sinhVien = HocSinhBLL.checkPassword(txtTenDangNhap.Text, txtMatKhau.Text);
                     if (sinhVien != null)
                     {
                         f = new FrmMainSinhVien(sinhVien);

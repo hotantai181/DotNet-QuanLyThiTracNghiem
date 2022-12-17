@@ -1,4 +1,6 @@
-﻿namespace GUI
+﻿using System;
+
+namespace GUI
 {
     partial class FrmTaoPhieu
     {
@@ -37,12 +39,6 @@
             this.xóaSốCâuHỏiChươngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnThongTinPhieu = new System.Windows.Forms.Panel();
             this.drvSoLuongCauHoi = new System.Windows.Forms.DataGridView();
-            this.STT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SoCauHoi_md = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Chuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MaChuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SoLuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flowLayoutPanel10 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnThoat = new System.Windows.Forms.Button();
             this.btnLuu = new System.Windows.Forms.Button();
@@ -81,6 +77,10 @@
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.làmMớiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.STT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Ma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SoCauHoi_md = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SoLuong = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2.SuspendLayout();
             this.contentmnu.SuspendLayout();
             this.pnThongTinPhieu.SuspendLayout();
@@ -154,6 +154,7 @@
             this.sửaSốCâuHỏiHỏiChươngToolStripMenuItem.Size = new System.Drawing.Size(281, 26);
             this.sửaSốCâuHỏiHỏiChươngToolStripMenuItem.Text = "Sửa số câu hỏi chương";
             this.sửaSốCâuHỏiHỏiChươngToolStripMenuItem.Click += new System.EventHandler(this.sửaSốCâuHỏiHỏiChươngToolStripMenuItem_Click);
+
             // 
             // xóaSốCâuHỏiChươngToolStripMenuItem
             // 
@@ -182,10 +183,8 @@
             this.drvSoLuongCauHoi.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.drvSoLuongCauHoi.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.STT,
-            this.SoCauHoi_md,
             this.Ma,
-            this.Chuong,
-            this.MaChuong,
+            this.SoCauHoi_md,
             this.SoLuong});
             this.drvSoLuongCauHoi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drvSoLuongCauHoi.Location = new System.Drawing.Point(0, 0);
@@ -199,55 +198,6 @@
             this.drvSoLuongCauHoi.TabIndex = 0;
             this.drvSoLuongCauHoi.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.drvSoLuongCauHoi_CellContentClick);
             this.drvSoLuongCauHoi.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.drvSoLuongCauHoi_RowPostPaint);
-            // 
-            // STT
-            // 
-            this.STT.HeaderText = "STT";
-            this.STT.MinimumWidth = 6;
-            this.STT.Name = "STT";
-            this.STT.ReadOnly = true;
-            // 
-            // SoCauHoi_md
-            // 
-            this.SoCauHoi_md.HeaderText = "Số câu hỏi mức độ";
-            this.SoCauHoi_md.MinimumWidth = 6;
-            this.SoCauHoi_md.Name = "SoCauHoi_md";
-            this.SoCauHoi_md.ReadOnly = true;
-            this.SoCauHoi_md.Visible = false;
-            // 
-            // Ma
-            // 
-            this.Ma.DataPropertyName = "Ma";
-            this.Ma.HeaderText = "Ma";
-            this.Ma.MinimumWidth = 6;
-            this.Ma.Name = "Ma";
-            this.Ma.ReadOnly = true;
-            this.Ma.Visible = false;
-            // 
-            // Chuong
-            // 
-            this.Chuong.DataPropertyName = "TenChuong";
-            this.Chuong.HeaderText = "Chương";
-            this.Chuong.MinimumWidth = 6;
-            this.Chuong.Name = "Chuong";
-            this.Chuong.ReadOnly = true;
-            // 
-            // MaChuong
-            // 
-            this.MaChuong.DataPropertyName = "MaChuong";
-            this.MaChuong.HeaderText = "Mã chương";
-            this.MaChuong.MinimumWidth = 6;
-            this.MaChuong.Name = "MaChuong";
-            this.MaChuong.ReadOnly = true;
-            this.MaChuong.Visible = false;
-            // 
-            // SoLuong
-            // 
-            this.SoLuong.DataPropertyName = "SoCauHoi";
-            this.SoLuong.HeaderText = "Số câu hỏi";
-            this.SoLuong.MinimumWidth = 6;
-            this.SoLuong.Name = "SoLuong";
-            this.SoLuong.ReadOnly = true;
             // 
             // flowLayoutPanel10
             // 
@@ -705,6 +655,38 @@
             this.toolStripMenuItem1.Text = "Xóa";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
+            // STT
+            // 
+            this.STT.HeaderText = "STT";
+            this.STT.MinimumWidth = 6;
+            this.STT.Name = "STT";
+            this.STT.ReadOnly = true;
+            // 
+            // Ma
+            // 
+            this.Ma.DataPropertyName = "MaPhieuTaoDe";
+            this.Ma.HeaderText = "Mã phiếu";
+            this.Ma.MinimumWidth = 6;
+            this.Ma.Name = "Ma";
+            this.Ma.ReadOnly = true;
+            this.Ma.Visible = false;
+            // 
+            // SoCauHoi_md
+            // 
+            this.SoCauHoi_md.HeaderText = "Số câu hỏi mức độ";
+            this.SoCauHoi_md.MinimumWidth = 6;
+            this.SoCauHoi_md.Name = "SoCauHoi_md";
+            this.SoCauHoi_md.ReadOnly = true;
+            this.SoCauHoi_md.Visible = false;
+            // 
+            // SoLuong
+            // 
+            this.SoLuong.DataPropertyName = "SoCauHoi";
+            this.SoLuong.HeaderText = "Số câu hỏi";
+            this.SoLuong.MinimumWidth = 6;
+            this.SoLuong.Name = "SoLuong";
+            this.SoLuong.ReadOnly = true;
+            // 
             // FrmTaoPhieu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
@@ -751,6 +733,11 @@
 
         }
 
+        private void sửaSốCâuHỏiHỏiChươngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox2;
@@ -759,12 +746,6 @@
         private System.Windows.Forms.Button btnThoat;
         private System.Windows.Forms.Panel pnThongTinPhieu;
         private System.Windows.Forms.DataGridView drvSoLuongCauHoi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn STT;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SoCauHoi_md;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Ma;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Chuong;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MaChuong;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SoLuong;
         private System.Windows.Forms.Panel pnThongTinChung;
         private System.Windows.Forms.ComboBox cboMonHoc;
         private System.Windows.Forms.TextBox txtNgayLap;
@@ -805,5 +786,9 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn STT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Ma;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SoCauHoi_md;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SoLuong;
     }
 }

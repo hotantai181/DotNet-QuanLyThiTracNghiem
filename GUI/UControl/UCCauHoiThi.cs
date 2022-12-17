@@ -7,18 +7,19 @@ namespace GUI.UControl
 {
     public partial class UCCauHoiThi : UserControl
     {
-        private NganHangCauHoi cauhoi;
+        private CauHoi cauhoi;
         private int index;
         private int maCauHoi;
         private bool daLam;
-
+        private CauHoi item;
+        private int i;
 
         public int Index { get => index; set => index = value; }
         public int MaCauHoi { get => maCauHoi; set => maCauHoi = value; }
         public bool DaLam { get => daLam; set => daLam = value; }
-        public NganHangCauHoi Cauhoi { get => cauhoi; set => cauhoi = value; }
+        public CauHoi Cauhoi { get => cauhoi; set => cauhoi = value; }
 
-        public UCCauHoiThi(NganHangCauHoi cauhoi, int index)
+        public UCCauHoiThi(CauHoi cauhoi, int index)
         {
             this.Cauhoi = cauhoi;
             this.Index = index;
@@ -26,18 +27,17 @@ namespace GUI.UControl
             this.MaCauHoi = cauhoi.MaCauHoi;
             InitializeComponent();
         }
-
         public string SelectedAnswer()
         {
             string temp = string.Empty;
             if (rdoBtnB.Checked)
-                temp = "B";
+                temp = Cauhoi.DapAnB;
             else if (rdoBtnC.Checked)
-                temp = "C";
+                temp = Cauhoi.DapAnC;
             else if (rdoBtnD.Checked)
-                temp = "D";
+                temp = Cauhoi.DapAnD;
             else if (rdoBtnA.Checked)
-                temp = "A";
+                temp = Cauhoi.DapAnA;
             return temp;
         }
 

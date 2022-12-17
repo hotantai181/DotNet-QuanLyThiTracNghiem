@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class DSTaoDT : ChuongHoc
+    public class DSTaoDT : PhieuTaoDe
     {
-        private int? _soCauHoi;
-        private int? _ma;
+        private Int64 _soCauHoi;
+        private string _ma;
 
-        public int? SoCauHoi
+        public Int64 SoCauHoi
         {
             get
             {
@@ -22,7 +22,7 @@ namespace DTO
                 _soCauHoi = value;
             }
         }
-        public int? Ma
+        public string Ma
         {
             get
             {

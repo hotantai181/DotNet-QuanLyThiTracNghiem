@@ -21,15 +21,15 @@ namespace GUI
 
         private void btnShow_Click(object sender, EventArgs e)
         {
-            List<string[]> data = new List<string[]>();
+            //List<string[]> data = new List<string[]>();
 
-            data.Add(new string[] { "MaDe", "MonHoc" });
-            data.Add(new string[] {
-                drvDeThi.CurrentRow.Cells["MaDe"].Value.ToString(),
-                new MonHocBLL().getTenMH(drvDeThi.CurrentRow.Cells["MaPhieuTaoDe"].Value.ToString())
-            }); // data
+            //data.Add(new string[] { "MaDe", "MonHoc" });
+            //data.Add(new string[] {
+            //    drvDeThi.CurrentRow.Cells["MaDe"].Value.ToString(),
+            //    new MonHocBLL().getTenMH(drvDeThi.CurrentRow.Cells["MaPhieuTaoDe"].Value.ToString())
+            //}); // data
 
-            new Reports<DeThi>().export_word(drvDeThi.CurrentRow.Cells["MaDe"].Value.ToString(), data);
+            //new Reports<DeThi>().export_word(drvDeThi.CurrentRow.Cells["MaDe"].Value.ToString(), data);
         }
 
         private void frmHienThiDT_Load(object sender, EventArgs e)

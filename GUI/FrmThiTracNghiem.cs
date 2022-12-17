@@ -3,6 +3,7 @@ using DTO;
 using GUI.UControl;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -12,32 +13,36 @@ namespace GUI
     public partial class FrmThiTracNghiem : Form
     {
         private int maCauHoi = 0;
-        private SinhVien sinhVien;
+        private HocSinh sinhVien;
         private int counter = 60;
         private Timer aTimer;
-        private SinhVien_LichThi sv_lt;
-        private int maSV_LT;
+       
+        private  string maHS;
 
-        private List<BaiThi> ltBaiThi;
+        private List<ChiTietBaiThi> ltBaiThi;
+        string made;
+        string maphieu;
+        int? tglambai;
 
-        public int MaSV_LT { get => maSV_LT; set => maSV_LT = value; }
-        public SinhVien_LichThi Sv_lt { get => sv_lt; set => sv_lt = value; }
-
-        public FrmThiTracNghiem(string massv, SinhVien_LichThi Sv_lt)
+        public FrmThiTracNghiem(string massv, string maDeThi)
         {
             InitializeComponent();
-            this.Sv_lt = Sv_lt;
-            ltBaiThi = new List<BaiThi>();
-            sinhVien = SinhVienBLL.GetSinhVien(massv);
+            made = maDeThi;
+            maHS = massv;
+            ltBaiThi = new List<ChiTietBaiThi>();
+            sinhVien = HocSinhBLL.GetSinhVien(massv);
             
         }
-
+            
         private void FrmThiTracNghiem_Load(object sender, EventArgs e)
         {
             lbCauHoi.MaximumSize = new Size(pnDe.Width, 0);
-            MaSV_LT = this.Sv_lt.MaSVLT;
-            lbMonHoc.Text = "Môn học: "+ Sv_lt.LichThi.MonHoc.TenMonHoc;
-            counter = counter * (int)Sv_lt.DeThi.PhieuTaoDe.ThoiGianLamBai;
+           
+            lblDeThi.Text = "Mã Đề: " + made;
+            maphieu = DeThiBLL.getMaPhieu(made);
+            lbelmonhoc.Text = "Môn Học: " + String.Format(MonHocBLL.getTenMH(maphieu));
+            tglambai = PhieuTaoBLL.getTGLamBai(maphieu);
+            counter = counter * (int)tglambai;
             LoadInfoSinhVien();
             LoadCauHoi();
             runTime();
@@ -56,7 +61,7 @@ namespace GUI
             setCountDownTime(counter);
         }
         private void aTimer_Tick(object sender, EventArgs e)
-        {
+        {   
             counter--;
             if (counter == 0)
                 aTimer.Stop();
@@ -85,7 +90,7 @@ namespace GUI
                 try
                 {
                     BaiThiBLL.InsertBaiThi(ltBaiThi);
-                    SinhVien_LichThiBLL.UpdateTrangThai(maSV_LT, true);
+                    ChiTietBaiThiBLL.UpdateTrangThai(maHS, "Đã hoàn thành");
                     MessageBox.Show("Hết giờ làm bìa. Nộp bài thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TinhDiem();
                     this.Close();
@@ -136,7 +141,7 @@ namespace GUI
 
         private void LoadCauHoi()
         {
-            var ltCauHoi = NganHangCauHoiBLL.GetListCauHoi(Sv_lt.MaDe);
+            var ltCauHoi = CauHoiBLL.GetListCauHoi(made);
 
             int i = ltCauHoi.Count();
             foreach (var item in ltCauHoi)
@@ -160,16 +165,15 @@ namespace GUI
                     uc.BackColor = Color.Yellow;
 
                 };
-
                 pnCauHoi.Controls.Add(uc);
                 i--;
             }
         }
 
-        private void LoadDataItem(NganHangCauHoi item, int index)
+        private void LoadDataItem(CauHoi item, int index)
         {
             lbIndex.Text = "Câu " + index;
-            lbCauHoi.Text = item.CauHoi;
+            lbCauHoi.Text = item.CauHoi1;
             rdoBtnA.Text = item.DapAnA;
             rdoBtnB.Text = item.DapAnB;
             rdoBtnC.Text = item.DapAnC;
@@ -306,9 +310,8 @@ namespace GUI
                         trangThai = "Đúng";
                     }
 
-                    BaiThi bai = new BaiThi
+                    ChiTietBaiThi bai = new ChiTietBaiThi
                     {
-                        MaSVLT = maSV_LT,
                         CauHoi = uc.Cauhoi.MaCauHoi,
                         CauTraLoi = uc.SelectedAnswer(),
                         TrangThai = trangThai,
@@ -319,40 +322,87 @@ namespace GUI
         }
         private void TinhDiem()
         {
-            int soCauDung = 0; 
+            int soCauDung = 0;
             int soChuaLam = 0;
             int soCauSai = 0;
 
-            foreach (BaiThi baiThi in ltBaiThi)
+            // Kiem tra so cau dung, sai, chua lam
+            foreach (ChiTietBaiThi baiThi in ltBaiThi)
             {
-                if(baiThi.TrangThai.Equals("Đúng")) soCauDung ++;   
+                if (baiThi.TrangThai.Equals("Đúng")) soCauDung++;
                 else if (baiThi.TrangThai.Equals("Chưa làm")) soChuaLam++;
                 else if (baiThi.TrangThai.Equals("Sai")) soCauSai++;
             }
             float diemMoiCau = 10f / ltBaiThi.Count;
             float diem = diemMoiCau * (float)soCauDung;
-
+            // Add ket qua bai thi
             KetQuaBaiThi kq = new KetQuaBaiThi
             {
+                MaKQ = "a",
                 Diem = diem,
-                HocKy = "Hoc Ky 4",
-                NienKhoa = "2021-2022",
-                MaSVMH = SinhVien_MonHocBLL.getSinhVienMonHoc(sinhVien.Mssv, Sv_lt.LichThi.MonHoc.MaMonHoc).MaSVMH
+                MaHS = maHS,
+                MaDe = made,
             };
             KetQuaBaiThiBLL.InsertKetQua(kq);
-            FrmXemDiem f = new FrmXemDiem(soCauDung, soCauSai, soChuaLam, diem);
-            f.ShowDialog();
+
+            // Thong Tin Sau Thi Xong
+            textBox1.Text = (soCauSai+ soCauDung + soChuaLam).ToString();
+            textBox2.Text = (soCauDung).ToString();
+            textBox3.Text = (soCauSai).ToString();
+            textBox4.Text = (diem).ToString();
+            // dt
+            DataTable dt = new DataTable("Ketqua");
+            dt.Columns.Add("CAU", typeof(int));
+            dt.Columns.Add("DADT", typeof(string));
+            dt.Columns.Add("DABC", typeof(string));
+            dt.Columns.Add("KQ", typeof(string));
+            int i = 40;
+            foreach (Control item in pnCauHoi.Controls)
+            {
+               
+                if (item.GetType() == typeof(UCCauHoiThi))
+                {
+                    UCCauHoiThi uc = (UCCauHoiThi)item;
+                    string trangThaidata = "Sai";
+                    if (uc.SelectedAnswer() == null)
+                    {
+                        trangThaidata = "Sai";
+                    }
+                    else if (uc.SelectedAnswer().Equals(string.Empty))
+                    {
+                        trangThaidata = "Chưa làm";
+                    }
+                    else if (uc.Cauhoi.DapAnDung.Equals(uc.SelectedAnswer()))
+                    {
+                        trangThaidata = "Đúng";
+                    }
+                    DataRow row = dt.NewRow();
+                    row["CAU"] = i;
+                    row["DADT"] = uc.Cauhoi.DapAnDung;
+                    row["DABC"] = uc.SelectedAnswer();
+                    row["KQ"] = trangThaidata;
+                    dt.Rows.Add(row);
+                }
+                i--;
+            }
+            DataSet dtSet = new DataSet();
+
+            // Add custTable to the DataSet.
+            dtSet.Tables.Add(dt);
+            BindingSource bs = new BindingSource();
+            bs.DataSource = dt;
+            dataGridView1.DataSource = bs;
         }
         private void btnNopBai_Click(object sender, EventArgs e)
         {
-            NopBai(); 
+            NopBai();
         }
         private void NopBai()
         {
             KiemTraBaiLam();
 
             int i = 0;
-            foreach (BaiThi bai in ltBaiThi)
+            foreach (ChiTietBaiThi bai in ltBaiThi)
             {
                 if (bai.TrangThai.Equals("Chưa làm"))
                 {
@@ -369,10 +419,8 @@ namespace GUI
                 try
                 {
                     BaiThiBLL.InsertBaiThi(ltBaiThi);
-                    SinhVien_LichThiBLL.UpdateTrangThai(maSV_LT, true);
                     MessageBox.Show("Nộp bài thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TinhDiem();
-                    this.Close();
                 }
                 catch
                 {
@@ -384,6 +432,11 @@ namespace GUI
         private void rdoBtnC_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

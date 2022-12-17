@@ -9,12 +9,17 @@ namespace DAL
 {
     public class ChiTietDeThiDAL
     {
+        QLThiTracNghiemDataContext db = new QLThiTracNghiemDataContext();
         public List<ChiTietDeThi> GetListCTDTByMaDe(string maDe)
         {
-            using (var db = new QLThiTracNghiemDataContext())
-            {
-                return db.ChiTietDeThis.Where(t => t.MaDe.Equals(maDe)).ToList();
-            }
+             return db.ChiTietDeThis.Where(t => t.MaDe.Equals(maDe)).ToList();
+            
+        }   
+        public int GetMaCTDeThi (string maDe)
+        {
+            ChiTietDeThi ctdt =db.ChiTietDeThis.Where(t => t.MaDe.Equals(maDe)).FirstOrDefault();
+            return ctdt.MaChiTietDeThi;
         }
+
     }
 }

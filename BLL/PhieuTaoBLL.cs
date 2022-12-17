@@ -26,35 +26,18 @@ namespace BLL
         {
             return new PhieuTaoDAL().add_phieuTao(pt);
         }
-        public bool add_phieuTao_chuong(PhieuTaoDe_Chuong pt)
-        {
-            return new PhieuTaoDAL().add_phieuTao_chuong(pt);
-        }
-        public List<MucDo> getMaMucDo(int pMaPT_c)
-        {
-            return new PhieuTaoDAL().getMucDos(pMaPT_c);
-        }
-        public bool add_mucDo_chuong(MucDo pMucDo)
-        {
-            return new PhieuTaoDAL().add_mucDo_chuong(pMucDo);
-        }
+      
         public bool change_phieuTao(PhieuTaoDe pPhieuTao)
         {
             return new PhieuTaoDAL().change_phieuTao(pPhieuTao);
         }
-        public int getMaPT_chuong()
+
+
+        public static int? getTGLamBai(string pMaPhieu)
         {
-            return new PhieuTaoDAL().getMaPT_chuong();
-        }
-        public List<DSTaoDT> getDS_cauHoi(string pMaPhieuTao)
-        {
-            return new PhieuTaoDAL().getDS_cauHoi(pMaPhieuTao);
+            return new PhieuTaoDAL().getTGLamBai(pMaPhieu);
         }
 
-        public List<Chuong> getDs_cauHoi_conLai(string pMaMH, string pMaPhieuTao)
-        {
-            return new PhieuTaoDAL().getDs_cauHoi_conLai(pMaMH, pMaPhieuTao);
-        }
 
         public int countPhieus()
         {
@@ -66,10 +49,6 @@ namespace BLL
             return string.Format("PH{0:00}", countPhieus() + 1);
         }
 
-        public bool remove_phieuTaoDe_chuong(int pMaPTD_C)
-        {
-            return new PhieuTaoDAL().remove_phieuTaoDe_chuong(pMaPTD_C);
-        }
         public bool remove_phieuTaoDe(string pMaPTD)
         {
             return new PhieuTaoDAL().remove_phieuTaoDe(pMaPTD);
@@ -88,7 +67,14 @@ namespace BLL
                 throw e;
             }
         }
-
+        public bool taoDeThiThuCong(string pMaPT)
+        {
+            return new PhieuTaoDAL().taoDeThiThuCong(pMaPT);
+        }
+        public bool taoCTDeThiThuCong(string pMaPT,ChiTietDeThi ctdt)
+        {
+            return new PhieuTaoDAL().taoCTDeThiThuCong(pMaPT, ctdt);
+        }
         public bool capNhatTrangThai(string pMaPT, string pMessage)
         {
             return new PhieuTaoDAL().capNhatTrangThai(pMaPT, pMessage);
@@ -102,6 +88,12 @@ namespace BLL
         public bool taoCTDeThi(string pMaPT)
         {
             return new PhieuTaoDAL().taoCTDeThi(pMaPT);
+        }
+
+
+        public bool ranDomCTDeThiConLai(string pMaDe,string pMaPhieuTao)
+        {
+            return new PhieuTaoDAL().ranDomCTDThiConLai(pMaDe,pMaPhieuTao);
         }
     }
 }

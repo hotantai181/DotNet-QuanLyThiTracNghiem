@@ -8,7 +8,7 @@ namespace DTO
 {
     public class PhieuTaoDT
     {
-        private string _maPhieu, _ngayLap, _trangThai;
+        private string _maPhieu, _ngayLap, _trangThai,_maMonHoc;
 
         public string MaPhieu
         {
@@ -41,6 +41,17 @@ namespace DTO
             set
             {
                 _trangThai = value;
+            }
+        }
+        public string MaMonHoc
+        {
+            get
+            {
+                return _maMonHoc;
+            }
+            set
+            {
+                _maMonHoc = value;
             }
         }
     }

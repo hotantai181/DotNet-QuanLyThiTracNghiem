@@ -26,12 +26,12 @@ namespace GUI
             cboNiemKhoa.DataSource = lstNienKhoa;
             cboNiemKhoa.Text = String.Empty;
 
-            List<Khoa> dsKhoa = KhoaBLL.GetDepartment();
-            dsKhoa.Add(new Khoa { MaKhoa = String.Empty, TenKhoa = String.Empty });
-            cboKhoa.DataSource = dsKhoa;
-            cboKhoa.ValueMember = "MaKhoa";
-            cboKhoa.DisplayMember = "TenKhoa";
-            cboKhoa.SelectedIndex = dsKhoa.Count - 1;
+            //List<Khoa> dsKhoa = KhoaBLL.GetDepartment();
+            //dsKhoa.Add(new Khoa { MaKhoa = String.Empty, TenKhoa = String.Empty });
+            //cboKhoa.DataSource = dsKhoa;
+            //cboKhoa.ValueMember = "MaKhoa";
+            //cboKhoa.DisplayMember = "TenKhoa";
+            //cboKhoa.SelectedIndex = dsKhoa.Count - 1;
         }
 
         private void cboKhoa_SelectedIndexChanged(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace GUI
             cboLop.DisplayMember = "TenLop";
             cboLop.Text = String.Empty;
 
-            cboMon.DataSource = MonHocBLL.GetMonHocs(cboKhoa.SelectedValue.ToString());
+            cboMon.DataSource = MonHocBLL.GetMonHoc(cboKhoa.SelectedValue.ToString());
             cboMon.ValueMember = "MaMonHoc";
             cboMon.DisplayMember = "TenMonHoc";
             cboMon.Text = String.Empty;
@@ -82,12 +82,13 @@ namespace GUI
 
             if (_ckErr) return;
 
-            lstKq = new ThongKeDiemBLL().getThongTinDiems_lop(
-                cboMon.SelectedValue.ToString(),
-                cboLop.SelectedValue.ToString(),
-                cboNiemKhoa.Text,
-                cboHocKy.Text);
-            dataGridViewTT.DataSource = lstKq;
+        //    lstKq = new ThongKeDiemBLL().getThongTinDiems_lop(
+        //        cboMon.SelectedValue.ToString(),
+        //        cboLop.SelectedValue.ToString(),
+        //        cboNiemKhoa.Text,
+        //        cboHocKy.Text);
+        //    dataGridViewTT.DataSource = lstKq;
+        //}
         }
         private void dataGridViewTT_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
@@ -98,7 +99,7 @@ namespace GUI
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            new ThongKeDiemBLL().exportExcel_Lop(cboMon.Text, cboLop.SelectedValue.ToString(), cboHocKy.Text, cboNiemKhoa.Text, lstKq);
+            //new ThongKeDiemBLL().exportExcel_Lop(cboMon.Text, cboLop.SelectedValue.ToString(), cboHocKy.Text, cboNiemKhoa.Text, lstKq);
         }
 
         private void dataGridViewTT_DataSourceChanged(object sender, EventArgs e)

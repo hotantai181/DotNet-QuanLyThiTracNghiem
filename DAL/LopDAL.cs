@@ -10,9 +10,9 @@ namespace DAL
     {
         QLThiTracNghiemDataContext db = new QLThiTracNghiemDataContext();
 
-        public List<Lop> getLops(string pMaKhoa)
+        public List<Lop> getLops(string pMaLop)
         {
-            return db.Lops.Where(l => l.MaKhoa == pMaKhoa).ToList();
+            return db.Lops.Where(l => l.MaLop == pMaLop).ToList();
         }
     }
 }

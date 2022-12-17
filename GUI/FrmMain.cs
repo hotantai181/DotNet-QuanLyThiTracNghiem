@@ -27,11 +27,11 @@ namespace GUI
             if (cvGV == "GV")
             {
 
-                thốngKêToolStripMenuItem.Enabled = false;
                 mnSaoLuu.Enabled = false;
             }
-           
-            
+            thủCôngToolStripMenuItem.Enabled = true;
+
+
         }
 
         private void mnHome_Click(object sender, EventArgs e)
@@ -43,7 +43,7 @@ namespace GUI
                 fTrangChu.btnThongKe.Enabled = false;
             }
             else
-                fTrangChu.btnThongKe.Click += mnThongKeDiem_Click;
+                
             fTrangChu.btnQLNganHangCauHoi.Click += mnQlNHCauHoi_Click;
             fTrangChu.btnQLPhieu.Click += mnQLPhieuTaoDe_Click;
             fTrangChu.btnQuanLySinhVien.Click += mnThongTinSv_Click;
@@ -108,12 +108,12 @@ namespace GUI
 
         private void mnQLPhucKhao_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FrmPhucKhao());
+            
         }
 
         private void mnThongKeDiemTheoPhong_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FrmThongKeDiem_PhongThi());
+           
         }
 
         private void quảnLýChungToolStripMenuItem_Click(object sender, EventArgs e)
@@ -144,6 +144,12 @@ namespace GUI
                 isLogout = true;
                 this.Close();
             }
+        }
+
+
+        private void thủCôngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmTaoDeThiThuCong());
         }
     }
 }

@@ -9,17 +9,17 @@ namespace GUI
     {
 
         bool isLogout = false;
-        private SinhVien sinhVien;
+        private HocSinh sinhVien;
 
-        public SinhVien SinhVien { get => sinhVien; set => sinhVien = value; }
+        public HocSinh SinhVien { get => sinhVien; set => sinhVien = value; }
 
-        public FrmMainSinhVien(SinhVien sinhVien)
+        public FrmMainSinhVien(HocSinh sinhVien)
         {
             InitializeComponent();
             SinhVien = sinhVien;
             mnHome.PerformClick();
         }
-        private void OpenChildForm(Form childForm)
+        public void OpenChildForm(Form childForm)
         {
             if (MdiChildren.Length > 0)
             {
@@ -37,34 +37,27 @@ namespace GUI
 
         private void mnHome_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FrmThongTinSinhVien(SinhVien));
+            OpenChildForm(new FrmThongTinSinhVien(sinhVien));
         }
 
         private void mnXemLichThi_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FrmXemLichThi(sinhVien));
+            OpenChildForm(new frmMainOnLuyen(sinhVien));
         }
 
         private void mnThi_Click(object sender, EventArgs e)
         {
-
-            FrmChonLichThi f = new FrmChonLichThi(sinhVien);
-            this.Hide();
-            f.ShowDialog();
-            this.Show();
+            
         }
-
         private void FrmMainSinhVien_FormClosing(object sender, FormClosingEventArgs e)
         {
             if(!isLogout)
                 Application.Exit();
         }
-
         private void FrmMainSinhVien_Load(object sender, EventArgs e)
         {
 
         }
-
         private void mnDangXuat_Click(object sender, EventArgs e)
         {
             if(MessageBox.Show("Bạn có muốn đăng xuất không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
